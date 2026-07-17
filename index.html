@@ -4,390 +4,1292 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Офисы Домиан с банковскими реквизитами</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2312233f'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'%3E%D0%94%3C/text%3E%3C/svg%3E" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f9f9f9;
+    :root {
+      color-scheme: light;
+      --ink: #17202f;
+      --muted: #667085;
+      --line: #e6eaf0;
+      --paper: #ffffff;
+      --surface: #f4f6f9;
+      --navy: #12233f;
+      --navy-soft: #203a63;
+      --accent: #2f6fed;
+      --accent-soft: #eaf1ff;
+      --success: #168767;
+      --success-soft: #e9f8f2;
+      --danger: #c04b56;
+      --danger-soft: #fff0f1;
+      --shadow: 0 18px 45px rgba(28, 42, 67, 0.10);
     }
-    h1, h2 {
-      color: #333;
-    }
-    input#search {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
+
+    * {
       box-sizing: border-box;
-      font-size: 16px;
     }
-    .section {
-      margin-bottom: 40px;
+
+    html {
+      scroll-behavior: smooth;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      table-layout: fixed;
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(47, 111, 237, 0.12), transparent 26rem),
+        var(--surface);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
     }
-    th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-      vertical-align: top;
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .app-shell {
+      width: min(1600px, calc(100% - 40px));
+      margin: 24px auto 56px;
+    }
+
+    .hero {
+      position: relative;
       overflow: hidden;
-      text-overflow: ellipsis;
+      padding: clamp(26px, 4vw, 48px);
+      color: #fff;
+      border-radius: 28px;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,0.08), transparent 44%),
+        linear-gradient(135deg, var(--navy), var(--navy-soft));
+      box-shadow: 0 24px 60px rgba(18, 35, 63, 0.24);
     }
-    th {
-      background-color: #eee;
-      position: sticky;
-      top: 0;
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -150px;
+      width: 420px;
+      height: 420px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 58px rgba(255,255,255,0.035),
+        0 0 0 116px rgba(255,255,255,0.025);
+      pointer-events: none;
     }
-    tr.inactive {
-      background-color: #ffecec;
+
+    .hero-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 28px;
     }
-    tr.orlov {
-      background-color: #ecf9ff;
-    }
-    tr:hover {
-      background-color: #f5f5f5;
-    }
-    .section-title {
+
+    .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 18px;
     }
-    .badge {
-      background-color: #f0f0f0;
-      border-radius: 12px;
-      padding: 2px 8px;
-      font-size: 0.8em;
+
+    .brand-mark {
+      display: grid;
+      flex: 0 0 auto;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
     }
-    .details-btn {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: #a9c7ff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(27px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 14px 0 0 70px;
+      color: rgba(255,255,255,0.72);
+      font-size: clamp(14px, 2vw, 17px);
+    }
+
+    .source-pill {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255,255,255,0.17);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.82);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .source-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #5ee2b8;
+      box-shadow: 0 0 0 4px rgba(94,226,184,0.12);
+    }
+
+    .hero-stats {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .stat {
+      min-height: 100px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.075);
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 30px;
+      font-weight: 750;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 9px;
+      color: rgba(255,255,255,0.64);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      margin: -18px 24px 26px;
+      padding: 16px;
+      border: 1px solid rgba(230,234,240,0.9);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 17px;
+      width: 20px;
+      height: 20px;
+      color: #8791a3;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    input#search {
+      width: 100%;
+      height: 50px;
+      padding: 0 52px 0 50px;
+      color: var(--ink);
+      border: 1px solid #dce2ea;
+      border-radius: 14px;
+      outline: none;
+      background: #f9fafc;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    input#search:focus {
+      border-color: #93b2f5;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(47,111,237,0.10);
+    }
+
+    input#search::placeholder {
+      color: #98a2b3;
+    }
+
+    .clear-search {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      display: none;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      place-items: center;
+      color: #667085;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
       cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .clear-search.is-visible {
+      display: grid;
+    }
+
+    .clear-search:hover {
+      color: var(--ink);
+      background: #eef1f5;
+    }
+
+    .search-status {
+      min-width: 218px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .section {
+      margin-top: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 12px 34px rgba(28,42,67,0.07);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .section-icon {
+      position: relative;
+      display: grid;
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 12px;
+    }
+
+    .section-icon::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .section-active .section-icon {
+      background: var(--success-soft);
+    }
+
+    .section-active .section-icon::after {
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(22,135,103,0.11);
+    }
+
+    .section-inactive .section-icon {
+      background: var(--danger-soft);
+    }
+
+    .section-inactive .section-icon::after {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(192,75,86,0.10);
+    }
+
+    .section h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.018em;
+    }
+
+    .section-description {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .section-active .badge {
+      color: #0f7258;
+      background: var(--success-soft);
+    }
+
+    .section-inactive .badge {
+      color: #a83e48;
+      background: var(--danger-soft);
+    }
+
+    .table-container {
+      max-height: 68vh;
+      overflow: auto;
+      scrollbar-color: #c9d0da transparent;
+      scrollbar-width: thin;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1120px;
+      border-spacing: 0;
+      border-collapse: separate;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      padding: 15px 14px;
+      overflow-wrap: anywhere;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      color: #697386;
+      border-bottom: 1px solid var(--line);
+      background: #f8f9fb;
+      box-shadow: 0 1px 0 var(--line);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.065em;
+      text-transform: uppercase;
+    }
+
+    td {
+      border-bottom: 1px solid #eef1f5;
+      color: #344054;
+      font-size: 13px;
+    }
+
+    tbody tr {
+      transition: background .16s ease;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr:hover {
+      background: #f8faff;
+    }
+
+    tr.inactive {
+      background: #fffafb;
+    }
+
+    tr.inactive:hover {
+      background: #fff4f5;
+    }
+
+    .index-pill {
+      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      color: #637083;
+      border-radius: 9px;
+      background: #f0f3f7;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .office-name {
+      display: block;
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .office-meta {
+      display: block;
+      margin-top: 5px;
+      color: #8a94a6;
+      font-size: 11px;
+    }
+
+    .address {
+      line-height: 1.45;
+    }
+
+    .address-pending {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #9a6700;
+      font-weight: 650;
+    }
+
+    .address-pending::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e5a21a;
+    }
+
+    .phone-link {
+      color: #225bb7;
+      font-weight: 650;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .phone-link:hover {
+      text-decoration: underline;
+    }
+
+    .full-name {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .mono {
+      color: #475467;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.015em;
+    }
+
+    .details-btn,
+    .copy-btn {
+      border: 0;
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+
+    .details-btn {
+      padding: 9px 12px;
+      color: #225bb7;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .details-btn:hover {
+      background: #dce8ff;
+      transform: translateY(-1px);
+    }
+
+    .empty-state {
+      display: none;
+      padding: 34px 24px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(12, 24, 43, 0.68);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal.is-open {
+      display: flex;
+    }
+
+    .modal-content {
+      width: min(760px, 100%);
+      max-height: min(88vh, 900px);
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,0.34);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.30);
+      animation: modal-in .2s ease-out;
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(12px) scale(.985); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .modal-head {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 26px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-kicker {
+      margin: 0 0 5px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .modal h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    .modal-close {
+      display: grid;
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      place-items: center;
+      color: #667085;
+      border: 0;
+      border-radius: 11px;
+      background: #f1f3f6;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: var(--ink);
+      background: #e7ebf0;
+    }
+
+    .modal-body {
+      padding: 24px 26px 26px;
+    }
+
+    .modal-address {
+      margin: 0;
+      padding: 14px 16px;
+      color: #344054;
+      border: 1px solid #dfe6f0;
+      border-radius: 14px;
+      background: #f8faff;
+      font-weight: 600;
+    }
+
+    .modal-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 20px 0 10px;
+      color: var(--muted);
       font-size: 12px;
     }
-    .details-btn:hover {
-      background-color: #0056b3;
+
+    .modal-note::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
     }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 1000;
-    }
-    .modal-content {
-      background-color: white;
-      margin: 5% auto;
-      padding: 20px;
-      width: 80%;
-      max-width: 800px;
-      border-radius: 5px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .close {
-      float: right;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .copy-btn {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    .copy-btn:hover {
-      background-color: #218838;
-    }
+
     pre {
-      background-color: #f8f9fa;
-      padding: 15px;
-      border-radius: 4px;
+      max-height: 380px;
+      margin: 0;
+      overflow: auto;
+      padding: 18px;
+      color: #27364a;
+      border: 1px solid #e3e8ef;
+      border-radius: 14px;
+      background: #f7f9fc;
+      font: 13px/1.65 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
       white-space: pre-wrap;
-      word-break: break-all;
-      border: 1px solid #ddd;
-      margin: 10px 0;
+      word-break: break-word;
     }
-    .table-container {
-      overflow-x: auto;
-      margin-bottom: 20px;
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 16px;
     }
-    .full-name {
-      font-weight: bold;
+
+    .copy-hint {
+      color: #8a94a6;
+      font-size: 12px;
+    }
+
+    .copy-btn {
+      padding: 11px 16px;
+      color: #fff;
+      border-radius: 11px;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(47,111,237,0.22);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .copy-btn:hover {
+      background: #255fcf;
+      transform: translateY(-1px);
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .app-shell {
+        width: min(100% - 24px, 1600px);
+        margin-top: 12px;
+      }
+
+      .hero {
+        border-radius: 22px;
+      }
+
+      .hero-top,
+      .toolbar,
+      .section-head {
+        align-items: stretch;
+      }
+
+      .hero-top {
+        flex-direction: column;
+      }
+
+      .source-pill {
+        align-self: flex-start;
+      }
+
+      .hero-copy {
+        margin-left: 0;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+        margin-inline: 12px;
+      }
+
+      .search-status {
+        min-width: 0;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        min-height: 0;
+      }
+
+      .section-head {
+        padding: 18px;
+      }
+
+      .table-container {
+        max-height: none;
+        padding: 12px;
+        overflow: visible;
+        background: #f8f9fb;
+      }
+
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      table {
+        min-width: 0;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: grid;
+        gap: 12px;
+      }
+
+      tbody tr {
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(28,42,67,0.05);
+      }
+
+      tbody tr.inactive {
+        border-color: #f2d7da;
+        background: #fffafb;
+      }
+
+      td {
+        display: grid;
+        grid-template-columns: 104px minmax(0, 1fr);
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid #eef1f5;
+      }
+
+      td::before {
+        content: attr(data-label);
+        color: #8a94a6;
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+
+      td:first-child {
+        display: none;
+      }
+
+      .details-btn {
+        width: 100%;
+      }
+
+      .modal {
+        padding: 10px;
+      }
+
+      .modal-content {
+        max-height: 94vh;
+        border-radius: 18px;
+      }
+
+      .modal-head,
+      .modal-body {
+        padding-inline: 18px;
+      }
+
+      .modal-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .copy-btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">Д</div>
+            <div>
+              <p class="eyebrow">Внутренний справочник</p>
+              <h1>Офисная сеть Домиан</h1>
+            </div>
+          </div>
+          <p class="hero-copy">
+            Актуальные адреса, контакты и реквизиты офисов в одном месте.
+          </p>
+        </div>
+        <div class="source-pill">Обновлено · 17 июля 2026</div>
+      </div>
 
-  <h1>Список офисов Домиан с банковскими реквизитами</h1>
-  <input type="text" id="search" placeholder="Поиск по ключевым словам (название, адрес, ИНН, телефон и т.д.)" />
+      <div class="hero-stats" aria-label="Сводка по офисам">
+        <div class="stat">
+          <strong class="stat-value" id="network-count">—</strong>
+          <span class="stat-label">офисов в справочнике</span>
+        </div>
+        <div class="stat">
+          <strong class="stat-value" id="active-total">—</strong>
+          <span class="stat-label">активных офисов</span>
+        </div>
+        <div class="stat">
+          <strong class="stat-value" id="inactive-total">—</strong>
+          <span class="stat-label">офисов в архиве</span>
+        </div>
+      </div>
+    </header>
 
-  <div class="section">
-    <h2 class="section-title">
-      Активные офисы
-      <span class="badge" id="active-count"></span>
-    </h2>
-    <div class="table-container">
-      <table id="active-table">
-        <thead>
-          <tr>
-            <th style="width: 5%">№</th>
-            <th style="width: 15%">Название</th>
-            <th style="width: 20%">Адрес</th>
-            <th style="width: 10%">Телефон</th>
-            <th style="width: 15%">Собственник</th>
-            <th style="width: 10%">ИНН</th>
-            <th style="width: 10%">ОГРНИП</th>
-            <th style="width: 15%">Реквизиты</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <main>
+      <section class="toolbar" aria-label="Поиск по справочнику">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input
+            type="search"
+            id="search"
+            autocomplete="off"
+            placeholder="Название, адрес, телефон, собственник, ИНН…"
+            aria-label="Поиск по офисам"
+          />
+          <button class="clear-search" id="clearSearch" type="button" aria-label="Очистить поиск">×</button>
+        </div>
+        <div class="search-status" id="searchStatus" aria-live="polite"></div>
+      </section>
+
+      <section class="section section-active" data-section="active">
+        <div class="section-head">
+          <div class="section-heading">
+            <span class="section-icon" aria-hidden="true"></span>
+            <div>
+              <h2>Активные офисы</h2>
+              <p class="section-description">Актуальные рабочие офисы сети</p>
+            </div>
+          </div>
+          <span class="badge" id="active-count"></span>
+        </div>
+        <div class="table-container">
+          <table id="active-table">
+            <thead>
+              <tr>
+                <th style="width: 5%">№</th>
+                <th style="width: 15%">Название</th>
+                <th style="width: 20%">Адрес</th>
+                <th style="width: 11%">Телефон</th>
+                <th style="width: 15%">Собственник</th>
+                <th style="width: 11%">ИНН</th>
+                <th style="width: 12%">ОГРНИП</th>
+                <th style="width: 11%">Реквизиты</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="empty-state">По вашему запросу активные офисы не найдены.</div>
+        </div>
+      </section>
+
+      <section class="section section-inactive" data-section="inactive">
+        <div class="section-head">
+          <div class="section-heading">
+            <span class="section-icon" aria-hidden="true"></span>
+            <div>
+              <h2>Архив офисов</h2>
+              <p class="section-description">Офисы, перенесённые из актуального списка</p>
+            </div>
+          </div>
+          <span class="badge" id="inactive-count"></span>
+        </div>
+        <div class="table-container">
+          <table id="inactive-table">
+            <thead>
+              <tr>
+                <th style="width: 5%">№</th>
+                <th style="width: 15%">Название</th>
+                <th style="width: 20%">Адрес</th>
+                <th style="width: 11%">Телефон</th>
+                <th style="width: 15%">Собственник</th>
+                <th style="width: 11%">ИНН</th>
+                <th style="width: 12%">ОГРНИП</th>
+                <th style="width: 11%">Реквизиты</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="empty-state">По вашему запросу архивные офисы не найдены.</div>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <div class="section">
-    <h2 class="section-title">
-      Офисы Павла Орлова
-      <span class="badge" id="orlov-count"></span>
-    </h2>
-    <div class="table-container">
-      <table id="orlov-table">
-        <thead>
-          <tr>
-            <th style="width: 5%">№</th>
-            <th style="width: 15%">Название</th>
-            <th style="width: 20%">Адрес</th>
-            <th style="width: 10%">Телефон</th>
-            <th style="width: 15%">Собственник</th>
-            <th style="width: 10%">ИНН</th>
-            <th style="width: 10%">ОГРНИП</th>
-            <th style="width: 15%">Реквизиты</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2 class="section-title">
-      Неактивные (удалённые) офисы
-      <span class="badge" id="inactive-count"></span>
-    </h2>
-    <div class="table-container">
-      <table id="inactive-table">
-        <thead>
-          <tr>
-            <th style="width: 5%">№</th>
-            <th style="width: 15%">Название</th>
-            <th style="width: 20%">Адрес</th>
-            <th style="width: 10%">Телефон</th>
-            <th style="width: 15%">Собственник</th>
-            <th style="width: 10%">ИНН</th>
-            <th style="width: 10%">ОГРНИП</th>
-            <th style="width: 15%">Реквизиты</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div id="detailsModal" class="modal">
+  <div id="detailsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h3 id="modalTitle"></h3>
-      <pre id="modalContent"></pre>
-      <button class="copy-btn" id="copyBtn">Копировать в буфер обмена</button>
+      <div class="modal-head">
+        <div>
+          <p class="modal-kicker">Карточка офиса</p>
+          <h3 id="modalTitle"></h3>
+        </div>
+        <button class="modal-close close" type="button" aria-label="Закрыть">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-address" id="modalAddress"></p>
+        <div class="modal-note" id="modalNote">Реквизиты проверены и актуальны</div>
+        <pre id="modalContent"></pre>
+        <div class="modal-actions">
+          <span class="copy-hint">Скопируется вся карточка офиса</span>
+          <button class="copy-btn" id="copyBtn" type="button">Скопировать реквизиты</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Полные данные с унифицированными адресами и банковскими реквизитами
+    // Данные офисов и реквизиты сверены с актуальным Excel.
     const offices = [
-      { id: 1, name: "Квартал", address: "г. Аксай, ул. Толпинского 130, офис 4", phone: "+7-953-609-11-22", owner: "Алиева Зухра Рахитовна", inn: "662104294378", ogrnip: "32561960005191", email: "zuhra_2010_aidan@mail.ru", banking: "р/с 40802810617910000381\nИНН: 662104294378\nБанк: АО \"АЛЬФА-БАНК\"\nБИК: 044525593\nКор. счёт: 30101810200000000593", fullRequisites: "ИП Алиева Зухра Рахитовна\n\nИНН 662104294378, ОГРНИП 32561960005191\nАдрес: г. Аксай, ул. Толпинского 130, офис 4\nр/с 40802810617910000381\nАО \"АЛЬФА-БАНК\"\nБИК: 044525593\nКор. счёт: 30101810200000000593" },
-      { id: 2, name: "Домиан Добровольского", address: "г. Ростов-на-Дону, ул. Добровольского 13", phone: "+7-909-410-10-40", owner: "Баев Денис Владимирович", inn: "616613990495", ogrnip: "322619600007988", email: "Bdvrostov@mail.ru", banking: "р/с 40802810126300001829 Филиал Ростовский АО Альфа-Банк кор.счёт 30101810500000000207 БИК 046015207", fullRequisites: "ИП Баев Денис Владимирович\n\nИНН 616613990495, ОГРНИП 322619600007988\nАдрес: г. Ростов-на-Дону, ул. Добровольского 13\nр/с 40802810126300001829\nФилиал Ростовский АО \"Альфа-Банк\"\nКор.счёт 30101810500000000207\nБИК 046015207" },
-      { id: 3, name: "Домиан-Шолохова", address: "г. Ростов-на-Дону, 14 линия 84 «б»", phone: "+7-903-403-23-06", owner: "Баранова Ольга Борисовна", inn: "616710699958", ogrnip: "318619600012992", email: "monaxv@mail.ru", banking: "р/с 40802810620000525411 в ООО «Банк Точка», БИК: 044525104, к/с: 30101810745374525104", fullRequisites: "ИП Баранова Ольга Борисовна\n\nИНН 616710699958, ОГРНИП 318619600012992\nАдрес: г. Ростов-на-Дону, 14 линия 84 «б»\nр/с 40802810620000525411\nООО «Банк Точка»\nБИК: 044525104\nКор. счёт: 30101810745374525104" },
-      { id: 4, name: "Домиан Эстет", address: "г. Ростов-на-Дону, ул. Толмачева 50", phone: "+7-928-619-10-00", owner: "Бордиенко Елена Николаевна", inn: "612704481466", ogrnip: "324619600074944", email: "Rbordienko@mail.ru", banking: "р/с 408028108260070007343 филиал «Ростовский» АО Альфа-Банк г. Ростов-на-Дону к/с 30101810500000000207 БИК 044525593", fullRequisites: "ИП Бордиенко Елена Николаевна\n\nИНН 612704481466, ОГРНИП 324619600074944\nАдрес: г. Ростов-на-Дону, ул. Толмачева 50\nр/с 408028108260070007343\nФилиал «Ростовский» АО \"Альфа-Банк\"\nКор. счёт: 30101810500000000207\nБИК 044525593" },
-      { id: 5, name: "Батайск 2", address: "г. Батайск, ул. Куйбышева 127", phone: "+7-928-133-64-32", owner: "Брагин Андрей Владимирович", inn: "614102148704", ogrnip: "316619600182061", email: "b2domian@mail.ru", banking: "р/с 40802810747070000030 корр./с 30101810400000000700, БИК 040349700 Филиал «ЮЖНЫЙ» ПАО «БАНК УРАЛСИБ»", fullRequisites: "ИП Брагин Андрей Владимирович\n\nИНН 614102148704, ОГРНИП 316619600182061\nАдрес: г. Батайск, ул. Куйбышева 127\nр/с 40802810747070000030\nФилиал «ЮЖНЫЙ» ПАО «БАНК УРАЛСИБ»\nКор. счёт: 30101810400000000700\nБИК 040349700" },
-      { id: 6, name: "Домиан «Семейный»", address: "г. Батайск, ул. Заводская 184, офис 22", phone: "+7-988-539-73-42", owner: "Брыкалина Лилия Евгеньевна", inn: "615101072300", ogrnip: "321619600189973", email: "karmazina-lilya@mail.ru", banking: "40817810852096798456 Юго-Западный Банк ПАО Сбербанк", fullRequisites: "ИП Брыкалина Лилия Евгеньевна\n\nИНН 615101072300, ОГРНИП 321619600189973\nАдрес: г. Батайск, ул. Заводская 184, офис 22\nр/с 40817810852096798456\nЮго-Западный Банк ПАО Сбербанк" },
-      { id: 7, name: "Шахты на Маяковского", address: "г. Шахты, ул. Маяковского 18А", phone: "+7-918-507-10-00", owner: "Воронина Мария Петровна", inn: "262810552536", ogrnip: "324619600204770", email: "Babushkina_Mariya.10@mail.ru", banking: "р/с 40802810352090442239 Юго-Западный банк ПАО Сбербанк  г. Ростов-на-Дону к/с 30101810600000000602  БИК 046015602", fullRequisites: "ИП Воронина Мария Петровна\n\nИНН 262810552536, ОГРНИП 324619600204770\nАдрес: г. Шахты, ул. Маяковского 18А\nр/с 40802810352090442239\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 8, name: "Домиан Коммерция", address: "г. Ростов-на-Дону, ул. Береговая 6 (ТЦ Белый Ангел)", phone: "+7-928-229-47-77", owner: "Шаповалов Виктор Юрьевич", inn: "614105200744", ogrnip: "325619600080754", email: "Domian.com@yandex.ru", banking: "Расчётный счёт: 40802810652740004711;\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК 046015602\nКорсчёт: 30101810600000000602", fullRequisites: "ИП Шаповалов Виктор Юрьевич\n\nИНН 614105200744, ОГРНИП 325619600080754\nАдрес: г. Ростов-на-Дону, ул. Береговая 6 (ТЦ Белый Ангел)\nр/с 40802810652740004711\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 9, name: "Гвардейский", address: "г. Ростов-на-Дону, пр. Буденновский 59", phone: "+7-928-611-94-11", owner: "Грибенюк Светлана Леонидовна", inn: "615416655175", ogrnip: "304616228500015", email: "bezglasnaya-19@yandex.ru", banking: "р/с 40802810826140006274\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nк/с 30101810500000000207\nБИК 046015207", fullRequisites: "ИП Грибенюк Светлана Леонидовна\n\nИНН 615416655175, ОГРНИП 304616228500015\nАдрес: г. Ростов-на-Дону, пр. Буденновский 59\nр/с 40802810826140006274\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nКор. счёт: 30101810500000000207\nБИК 046015207" },
-      { id: 10, name: "Аксай Центральный", address: "г. Аксай, ул. Заводская 22", phone: "+7-952-588-83-67", owner: "Гуков Денис Иванович", inn: "616111710000", ogrnip: "318619600087382", email: "", banking: "40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974", fullRequisites: "ИП Гуков Денис Иванович\n\nИНН 616111710000, ОГРНИП 318619600087382\nАдрес: г. Аксай, ул. Заводская 22\nр/с 40802810600000548499\nАО «ТБанк»\nИНН банка: 7710140679\nБИК: 044525974\nКор. счёт: 30101810145250000974" },
-      { id: 11, name: "Нариманова", address: "г. Ростов-на-Дону, ул. Нагибина 40Б, офис 308", phone: "+7-952-588-83-67", owner: "Гуков Денис Иванович", inn: "616111710000", ogrnip: "318619600087382", email: "", banking: "40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974", fullRequisites: "ИП Гуков Денис Иванович\n\nИНН 616111710000, ОГРНИП 318619600087382\nАдрес: г. Ростов-на-Дону, ул. Нагибина 40Б, офис 308\nр/с 40802810600000548499\nАО «ТБанк»\nИНН банка: 7710140679\nБИК: 044525974\nКор. счёт: 30101810145250000974" },
-      { id: 12, name: "Домиан офис Даниловых", address: "г. Ростов-на-Дону, ул. Сальский 101, офис 121", phone: "+7-988-990-89-13", owner: "Данилова Ольга Георгиевна", inn: "614603129156", ogrnip: "322619600036848", email: "Olgageorgievna87@yandex.ru", banking: "р/с 40802810952090106690 Юго-Западный банк ПАО Сбербанк  г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Данилова Ольга Георгиевна\n\nИНН 614603129156, ОГРНИП 322619600036848\nАдрес: г. Ростов-на-Дону, ул. Сальский 101, офис 121\nр/с 40802810952090106690\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 13, name: "Домиан Мой Дом", address: "г. Ростов-на-Дону, ул. 40 летия победы 63/17с8", phone: "+7-928-177-98-93", owner: "Дронова Алёна Викторовна", inn: "614702345824", ogrnip: "323619600260572", email: "lena.dronova.1974@mail.ru", banking: "р/с 40802810752090083285 Юго-Западный банк ПАО Сбербанк к/с30101810600000000602", fullRequisites: "ИП Дронова Алёна Викторовна\n\nИНН 614702345824, ОГРНИП 323619600260572\nАдрес: г. Ростов-на-Дону, ул. 40 летия победы 63/17с8\nр/с 40802810752090083285\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 14, name: "Домиан Уютный Дом", address: "г. Ростов-на-Дону, ул. Мечникова 114/134, офис 210", phone: "+7-909-432-49-99", owner: "Дудка Павел Сергеевич", inn: "611301324959", ogrnip: "321619600141624", email: "domian.na.dony@gmail.com", banking: "р/с 408028102520900090820 Юго-Западный банк ПАО Сбербанк г. Ростов на Дону БИК 046015602", fullRequisites: "ИП Дудка Павел Сергеевич\n\nИНН 611301324959, ОГРНИП 321619600141624\nАдрес: г. Ростов-на-Дону, ул. Мечникова 114/134, офис 210\nр/с 408028102520900090820\nЮго-Западный банк ПАО Сбербанк\nБИК 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 15, name: "Батайск Южный", address: "г. Батайск, ул. Почтовая 202-204", phone: "+7-908-513-78-42", owner: "Ефремова Наталья Вячеславовна", inn: "614901636754", ogrnip: "325619600009180", email: "Vampiressa83@mail.ru", banking: "р/с 40802810026400001476 Филиал \"Ростовский\" АО \"Альфа-Банк\" к/с 30101810500000000207 БИК 046015207", fullRequisites: "ИП Ефремова Наталья Вячеславовна\n\nИНН 614901636754, ОГРНИП 325619600009180\nАдрес: г. Батайск, ул. Почтовая 202-204\nр/с 40802810026400001476\nФилиал \"Ростовский\" АО \"Альфа-Банк\"\nКор. счёт: 30101810500000000207\nБИК 046015207" },
-      { id: 16, name: "Домиан Малиновского", address: "г. Ростов-на-Дону, ул. Малиновского 46а/27, офис 24", phone: "+7-918-574-35-20", owner: "Заичкин Иван Николаевич", inn: "611804206430", ogrnip: "324619600099287", email: "zaichkin.ivan1501@yandex.ru", banking: "р/с 40802810300000417796\nк/с 30101810645374525068\nБИК 044525068\nООО Озон Банк", fullRequisites: "ИП Заичкин Иван Николаевич\n\nИНН 611804206430, ОГРНИП 324619600099287\nАдрес: г. Ростов-на-Дону, ул. Малиновского 46а/27, офис 24\nр/с 40802810300000417796\nООО Озон Банк\nКор. счёт: 30101810645374525068\nБИК 044525068" },
-      { id: 17, name: "ВектоР Домиан", address: "г. Ростов-на-Дону, ул. Зорге 17, офис 2", phone: "+7-961-316-57-17", owner: "Биджиева Анна Александровна", inn: "612701340763", ogrnip: "321619600003868", email: "anna.zaleshenko@yandex.ru", banking: "р/с 40802810952090075420\nЮго-Западный Банк ПАО Сбербанк\nкор.счет 30101810600000000602\nБИК 046015602", fullRequisites: "ИП Биджиева Анна Александровна\n\nИНН 612701340763, ОГРНИП 321619600003868\nАдрес: г. Ростов-на-Дону, ул. Зорге 17, офис 2\nр/с 40802810952090075420\nЮго-Западный Банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 18, name: "Новочеркасск 2", address: "г. Новочеркасск, ул. Народная 1, офис 114", phone: "+7-938-154-59-15", owner: "Зеленьков Александр Михайлович", inn: "61490663404", ogrnip: "315617300002118", email: "an_domian@mail.ru", banking: "Расчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602", fullRequisites: "ИП Зеленьков Александр Михайлович\n\nИНН 61490663404, ОГРНИП 315617300002118\nАдрес: г. Новочеркасск, ул. Народная 1, офис 114\nр/с 40802810152090109374\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 19, name: "Домиан Сельмаш", address: "г. Ростов-на-Дону, ул. 1-й конной армии 13в, офис 22", phone: "+7-938-154-59-15", owner: "Зеленьков Александр Михайлович", inn: "61490663404", ogrnip: "315617300002118", email: "an_domian@mail.ru", banking: "Расчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602", fullRequisites: "ИП Зеленьков Александр Михайлович\n\nИНН 61490663404, ОГРНИП 315617300002118\nАдрес: г. Ростов-на-Дону, ул. 1-й конной армии 13в, офис 22\nр/с 40802810152090109374\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 20, name: "Домиан Северный-3", address: "г. Ростов-на-Дону, пр. Космонавтов 31В/21В, 3 этаж, офис 30", phone: "+7-928-229-12-44", owner: "Кивва Ирина Васильевна", inn: "615000646692", ogrnip: "312619330500047", email: "rostovatlasan@yandex.ru", banking: "Расчетный счет: 40802810200000000829\nБанк: ПАО КБ \"СЕЛЬМАШБАНК\" БИК: 046015860 Корр. счет:\n30101810400000000860", fullRequisites: "ИП Кивва Ирина Васильевна\n\nИНН 615000646692, ОГРНИП 312619330500047\nАдрес: г. Ростов-на-Дону, пр. Космонавтов 31В/21В, 3 этаж, офис 30\nр/с 40802810200000000829\nПАО КБ \"СЕЛЬМАШБАНК\"\nБИК: 046015860\nКор. счёт: 30101810400000000860" },
-      { id: 21, name: "Суворовский 2", address: "г. Ростов-на-Дону, ул. Петренко 18", phone: "+7-988-996-13-00", owner: "Князева Лариса Александровна", inn: "612400841004", ogrnip: "321619600016360", email: "Knyazevp83@mail.ru", banking: "р/с 40802810352090426543\nПАО Сбербанк г. Ростов-на-Дону, ул. Евдокимова, д. 37 Доп. офис N5221/01\nк/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Князева Лариса Александровна\n\nИНН 612400841004, ОГРНИП 321619600016360\nАдрес: г. Ростов-на-Дону, ул. Петренко 18\nр/с 40802810352090426543\nПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 22, name: "ЛеМар Вересаево", address: "г. Ростов-на-Дону, ул. Берберовская 2/101, стр. 2, офис 12", phone: "+7-988-571-57-14", owner: "Козлова Елена Александровна", inn: "616610539710", ogrnip: "323619600168391", email: "elena.kozlovva@yandex.ru", banking: "р/с 40802810000005065263 АО ТБанк г.москва, к/с 30101810145250000974 бик 044525974", fullRequisites: "ИП Козлова Елена Александровна\n\nИНН 616610539710, ОГРНИП 323619600168391\nАдрес: г. Ростов-на-Дону, ул. Берберовская 2/101, стр. 2, офис 12\nр/с 40802810000005065263\nАО ТБанк г. Москва\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 23, name: "Домиан Эксперт", address: "г. Ростов-на-Дону, ул. Б. Садовая 162/70, кв. 7", phone: "+7-918-558-78-98", owner: "Котовская Ольга Андреевна", inn: "616603300375", ogrnip: "310616406100044", email: "domianexpert@mail.ru", banking: "р/с 40802810452090088221 Юго-Западный банк ПАО Сбербанк  г. Ростов-на-Дону к/с 30101 810 6 0000 0000602  БИК 046015602", fullRequisites: "ИП Котовская Ольга Андреевна\n\nИНН 616603300375, ОГРНИП 310616406100044\nАдрес: г. Ростов-на-Дону, ул. Б. Садовая 162/70, кв. 7\nр/с 40802810452090088221\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 24, name: "Домиан Рантье", address: "г. Ростов-на-Дону, ул. Красноармейская 121", phone: "+7-905-455-96-56", owner: "Кравцов Андрей Федорович", inn: "615490300115", ogrnip: "316619600249052", email: "domianandrey@yandex.ru", banking: "Р/с 40802810000000123278\nАО «ТБанк»\nк/сч 30101810145250000974\nБИК  044525974", fullRequisites: "ИП Кравцов Андрей Федорович\n\nИНН 615490300115, ОГРНИП 316619600249052\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121\nр/с 40802810000000123278\nАО «ТБанк»\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 25, name: "Новочеркасск 1", address: "г. Новочеркасск, пр. Платовский 92", phone: "+7-903-463-31-25", owner: "Лебедев Никита Сергеевич", inn: "615015517925", ogrnip: "312618310200032", email: "domiannovoch@gmail.com", banking: "р/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\"", fullRequisites: "ИП Лебедев Никита Сергеевич\n\nИНН 615015517925, ОГРНИП 312618310200032\nАдрес: г. Новочеркасск, пр. Платовский 92\nр/с 40802810000000185588\nАО \"Т-БАНК\"\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 26, name: "Севастополь", address: "г. Севастополь, ул. Астана Кесаева 3б, 4 этаж, офис 25", phone: "+7-903-463-31-25", owner: "Лебедев Никита Сергеевич", inn: "615015517925", ogrnip: "312618310200032", email: "domiannovoch@gmail.com", banking: "р/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\"", fullRequisites: "ИП Лебедев Никита Сергеевич\n\nИНН 615015517925, ОГРНИП 312618310200032\nАдрес: г. Севастополь, ул. Астана Кесаева 3б, 4 этаж, офис 25\nр/с 40802810000000185588\nАО \"Т-БАНК\"\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 27, name: "Западный Алмаз", address: "г. Ростов-на-Дону, пр. Стачки 188", phone: "+7-928-754-41-47", owner: "Лобань Илона Сергеевна", inn: "263013312006", ogrnip: "324619600257030", email: "Ilona.loban75@mail.ru", banking: "Расчётный счёт: 40802810452090449129\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 046015602\nКорсчёт: 30101810600000000602", fullRequisites: "ИП Лобань Илона Сергеевна\n\nИНН 263013312006, ОГРНИП 324619600257030\nАдрес: г. Ростов-на-Дону, пр. Стачки 188\nр/с 40802810452090449129\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 28, name: "Домиан Нагибина", address: "г. Ростов-на-Дону, ул. Нагибина 23", phone: "+7-903-401-55-45", owner: "Марков Алексей Владимирович", inn: "616107282175", ogrnip: "320619600162378", email: "2215545@bk.ru", banking: "Номер счета: 40802810326080004551, Банк: ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК», БИК: 046015207, К/с: 30101810500000000207", fullRequisites: "ИП Марков Алексей Владимирович\n\nИНН 616107282175, ОГРНИП 320619600162378\nАдрес: г. Ростов-на-Дону, ул. Нагибина 23\nр/с 40802810326080004551\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nБИК: 046015207\nКор. счёт: 30101810500000000207" },
-      { id: 29, name: "Аксай", address: "г. Аксай, ул. Ленина 41", phone: "+7-938-147-96-60", owner: "Приходченко Ирина Леонидовна", inn: "613203719423", ogrnip: "317619600161221", email: "m89381479660@yandex.ru", banking: "Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411", fullRequisites: "ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: г. Аксай, ул. Ленина 41\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411" },
-      { id: 30, name: "Домиан ЛегеАртис", address: "пос. Верхнетемерницкий, ул. Обсерваторная 104/1, офис 15", phone: "+7-938-147-96-60", owner: "Приходченко Ирина Леонидовна", inn: "613203719423", ogrnip: "317619600161221", email: "m89381479660@yandex.ru", banking: "Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411", fullRequisites: "ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: пос. Верхнетемерницкий, ул. Обсерваторная 104/1, офис 15\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411" },
-      { id: 31, name: "Ленинаван", address: "г. Ростов-на-Дону, ул. Шаумяна 1е", phone: "+7-938-147-96-60", owner: "Приходченко Ирина Леонидовна", inn: "613203719423", ogrnip: "317619600161221", email: "m89381479660@yandex.ru", banking: "Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411", fullRequisites: "ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: г. Ростов-на-Дону, ул. Шаумяна 1е\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411" },
-      { id: 32, name: "Янтарный", address: "п. Камышеваха, ул. Платиновая 10/26", phone: "+7-938-147-96-60", owner: "Приходченко Ирина Леонидовна", inn: "613203719423", ogrnip: "317619600161221", email: "m89381479660@yandex.ru", banking: "Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411", fullRequisites: "ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: п. Камышеваха, ул. Платиновая 10/26\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411" },
-      { id: 33, name: "Домиан Риелт", address: "г. Ростов-на-Дону, ул. Туполева 16е, офис 523", phone: "+7-928-197-03-77", owner: "Молчанов Андрей Владимирович", inn: "616602237568", ogrnip: "", email: "", banking: "40802810326000019076 ФИЛИАЛ Ростовский АО Альфа-Банк Бик 046015207 КС 30101810500000000207", fullRequisites: "ИП Молчанов Андрей Владимирович\n\nИНН 616602237568\nАдрес: г. Ростов-на-Дону, ул. Туполева 16е, офис 523\nр/с 40802810326000019076\nФИЛИАЛ Ростовский АО Альфа-Банк\nБИК 046015207\nКор. счёт: 30101810500000000207" },
-      { id: 34, name: "Левенцовский 1", address: "г. Ростов-на-Дону, ул. Ерёменко 99", phone: "+7-951-526-98-48", owner: "Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "р/с 40802810752090008590 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Ерёменко 99\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 35, name: "Домиан Верхняя Александровка", address: "г. Ростов-на-Дону, ул. 40 лет победы 156/7", phone: "+7-999-691-46-34", owner: "Некрасова Юлия Петровна", inn: "616511782591", ogrnip: "312616414900010", email: "d9996914634@gmail.com", banking: "р/с 40817810500017509121 в АО «Тинькофф Банк»\nк/с 30101810145250000974\nБИК 044525974", fullRequisites: "ИП Некрасова Юлия Петровна\n\nИНН 616511782591, ОГРНИП 312616414900010\nАдрес: г. Ростов-на-Дону, ул. 40 лет победы 156/7\nр/с 40817810500017509121\nАО «Тинькофф Банк»\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 36, name: "Золотой квадрат", address: "г. Ростов-на-Дону, ул. Малиновского 66/1", phone: "+7-905-427-43-47", owner: "Немченко Вадим Вадимович", inn: "616802670941", ogrnip: "321619600021006", email: "", banking: "40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК", fullRequisites: "ИП Немченко Вадим Вадимович\n\nИНН 616802670941, ОГРНИП 321619600021006\nАдрес: г. Ростов-на-Дону, ул. Малиновского 66/1\nр/с 40802810052090075236\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 37, name: "Азов Первый", address: "г. Азов, Петровский бульвар 20/27", phone: "+7-905-427-43-47", owner: "Немченко Вадим Вадимович", inn: "616802670941", ogrnip: "321619600021006", email: "", banking: "40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК", fullRequisites: "ИП Немченко Вадим Вадимович\n\nИНН 616802670941, ОГРНИП 321619600021006\nАдрес: г. Азов, Петровский бульвар 20/27\nр/с 40802810052090075236\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 38, name: "Капитал", address: "г. Ростов-на-Дону, ул. Подвойского 58/85", phone: "+7-988-556-98-88", owner: "Обдул Алла Михайловна", inn: "526104307869", ogrnip: "325619600026425", email: "", banking: "40802810520000552759 ООО Точка Банк Бик 044525104 КС 30101810745374525104", fullRequisites: "ИП Обдул Алла Михайловна\n\nИНН 526104307869, ОГРНИП 325619600026425\nАдрес: г. Ростов-на-Дону, ул. Подвойского 58/85\nр/с 40802810520000552759\nООО Точка Банк\nБИК 044525104\nКор. счёт: 30101810745374525104" },
-      { id: 39, name: "Западный 2", address: "г. Ростов-на-Дону, ул. Зорге 64б", phone: "+7-961-296-90-00", owner: "Панасенко Артем Юрьевич", inn: "614807776440", ogrnip: "312619107900041", email: "", banking: "рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715", fullRequisites: "ИП Панасенко Артем Юрьевич\n\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: г. Ростов-на-Дону, ул. Зорге 64б\nр/с 40802810101000012117\nГРКЦ ГУ ЦБ РФ РО\nКор. счёт: 30101810100000000715\nБИК 041806715" },
-      { id: 40, name: "Домиан Премьер", address: "г. Ростов-на-Дону, ул. М. Горького 120, офис 22", phone: "+7-961-296-90-00", owner: "Панасенко Артем Юрьевич", inn: "614807776440", ogrnip: "312619107900041", email: "", banking: "рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715", fullRequisites: "ИП Панасенко Артем Юрьевич\n\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: г. Ростов-на-Дону, ул. М. Горького 120, офис 22\nр/с 40802810101000012117\nГРКЦ ГУ ЦБ РФ РО\nКор. счёт: 30101810100000000715\nБИК 041806715" },
-      { id: 41, name: "Батайск 1", address: "г. Батайск, ул. Энгельса 188", phone: "+7-918-532-58-87", owner: "Панасенко Артем Юрьевич", inn: "614807776440", ogrnip: "312619107900041", email: "", banking: "рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715", fullRequisites: "ИП Панасенко Артем Юрьевич\n\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: г. Батайск, ул. Энгельса 188\nр/с 40802810101000012117\nГРКЦ ГУ ЦБ РФ РО\nКор. счёт: 30101810100000000715\nБИК 041806715" },
-      { id: 42, name: "Династия", address: "г. Ростов-на-Дону", phone: "+7-918-554-38-89", owner: "Пирогова Екатерина Ивановна", inn: "616704685562", ogrnip: "32361900021446", email: "Katrine.pirogova@yandex.ru", banking: "р/с 40802810652090004416 в Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону,\nк/с 30101810600000000602, БИК 046015602", fullRequisites: "ИП Пирогова Екатерина Ивановна\n\nИНН 616704685562, ОГРНИП 32361900021446\nАдрес: г. Ростов-на-Дону\nр/с 40802810652090004416\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 43, name: "Домиан Лермонт", address: "г. Ростов-на-Дону, ул. Лермонтовская 102", phone: "+7-913-983-53-13", owner: "", inn: "", ogrnip: "", email: "", banking: "40802810452090016950 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК БИК 046015602 КС 30101810600000000602", fullRequisites: "Адрес: г. Ростов-на-Дону, ул. Лермонтовская 102\nр/с 40802810452090016950\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК 046015602\nКор. счёт: 30101810600000000602" },
-      { id: 44, name: "Новочеркасск Октябрьский", address: "г. Новочеркасск, ул. Калинина 65б", phone: "+7-951-519-55-59", owner: "Лебедев Никита Сергеевич", inn: "615015517925", ogrnip: "312618310200032", email: "domiannovoch@gmail.com", banking: "р/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\"", fullRequisites: "ИП Лебедев Никита Сергеевич\n\nИНН 615015517925, ОГРНИП 312618310200032\nАдрес: г. Новочеркасск, ул. Калинина 65б\nр/с 40802810000000185588\nАО \"Т-БАНК\"\nКор. счёт: 30101810145250000974\nБИК 044525974" },
-      { id: 45, name: "Первомайский", address: "г. Ростов-на-Дону, ул. Лелюшенко 1", phone: "+7-908-506-54-51", owner: "Скворцова Елена Юрьевна", inn: "612401877081", ogrnip: "318619600086071", email: "komaroffilia@yandex.ru", banking: "Расчётный счёт: 40802810252090018378\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 046015602\nКорсчёт: 30101810600000000602\nИНН банка: 7707083893\nКПП банка: 616143002", fullRequisites: "ИП Скворцова Елена Юрьевна\n\nИНН 612401877081, ОГРНИП 318619600086071\nАдрес: г. Ростов-на-Дону, ул. Лелюшенко 1\nр/с 40802810252090018378\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКор. счёт: 30101810600000000602\nИНН банка: 7707083893\nКПП банка: 616143002" },
-      { id: 46, name: "Меркурий", address: "г. Ростов-на-Дону, пр. Коммунистический 25", phone: "+7-928-270-80-98", owner: "Скрыпникова Наталья Федоровна", inn: "90103100798", ogrnip: "325619600047560", email: "NATA2708098@MAIL.RU", banking: "р/с 40802810700000910848 ООО \"ОЗОН Банк\" г. Москва 30101810645374525068 БИК 044525068", fullRequisites: "ИП Скрыпникова Наталья Федоровна\n\nИНН 90103100798, ОГРНИП 325619600047560\nАдрес: г. Ростов-на-Дону, пр. Коммунистический 25\nр/с 40802810700000910848\nООО \"ОЗОН Банк\" г. Москва\nКор. счёт: 30101810645374525068\nБИК 044525068" },
-      { id: 47, name: "Офис на Пушкинской", address: "г. Ростов-на-Дону, ул. Пушкинская 206", phone: "+7-951-516-38-16", owner: "Смехнова Оксана Александровна", inn: "616715303416", ogrnip: "318619600152382", email: "domian.ug@yandex.ru", banking: "р/с 40802810052090023042 юго- западный банк пао сбербанк г. Ростов на Дону\nк/с 30101810600000000602\nБИК 046015602", fullRequisites: "ИП Смехнова Оксана Александровна\n\nИНН 616715303416, ОГРНИП 318619600152382\nАдрес: г. Ростов-на-Дону, ул. Пушкинская 206\nр/с 40802810052090023042\nЮго-западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 48, name: "Домиан Свердловск ЛНР", address: "временно без офиса", phone: "+7-959-521-30-70", owner: "Теплинский Сергей", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "Адрес: временно без офиса" },
-      { id: 49, name: "Домиан Волгодонск Первый", address: "г. Волгодонск, ул. Энтузиастов 26б", phone: "+7-905-428-76-50", owner: "Теркин Валерий Владимирович", inn: "614301274189", ogrnip: "318619600202410", email: "domian.irina.1989@mail.ru", banking: "р/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Теркин Валерий Владимирович\n\nИНН 614301274189, ОГРНИП 318619600202410\nАдрес: г. Волгодонск, ул. Энтузиастов 26б\nр/с 40802810752090046727\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 50, name: "Западный Олимп", address: "г. Ростов-на-Дону, ул. Зорге 11", phone: "+7-905-428-76-50", owner: "Теркин Валерий Владимирович", inn: "614301274189", ogrnip: "318619600202410", email: "domian.irina.1989@mail.ru", banking: "р/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Теркин Валерий Владимирович\n\nИНН 614301274189, ОГРНИП 318619600202410\nАдрес: г. Ростов-на-Дону, ул. Зорге 11\nр/с 40802810752090046727\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 51, name: "Домиан Белая Калитва", address: "г. Белая Калитва, ул. Калинина 2", phone: "+7-989-515-00-06", owner: "Титовский Роман Станиславович", inn: "614211438308", ogrnip: "314619222600031", email: "domian.bk@mail.ru", banking: "р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Титовский Роман Станиславович\n\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Белая Калитва, ул. Калинина 2\nр/с 40802810852090008487\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 52, name: "Домиан Каменск-Шахтинский", address: "г. Каменск-Шахтинский, ул. Ворошилова 13", phone: "+7-900-555-00-06", owner: "Титовский Роман Станиславович", inn: "614211438308", ogrnip: "314619222600031", email: "domian.bk@mail.ru", banking: "р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Титовский Роман Станиславович\n\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Каменск-Шахтинский, ул. Ворошилова 13\nр/с 40802810852090008487\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 53, name: "Домиан Миллерово", address: "г. Миллерово, ул. Российская 59", phone: "+7-989-525-00-06", owner: "Титовский Роман Станиславович", inn: "614211438308", ogrnip: "314619222600031", email: "domian.bk@mail.ru", banking: "р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Титовский Роман Станиславович\n\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Миллерово, ул. Российская 59\nр/с 40802810852090008487\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 54, name: "Шахты Результат+", address: "г. Шахты, ул. Шевченко 125А", phone: "+7-989-515-00-06", owner: "Титовский Роман Станиславович", inn: "614211438308", ogrnip: "314619222600031", email: "domian.bk@mail.ru", banking: "р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Титовский Роман Станиславович\n\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Шахты, ул. Шевченко 125А\nр/с 40802810852090008487\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 55, name: "Домиан Стачки", address: "г. Ростов-на-Дону, пр. Стачки 210", phone: "+7-903-402-04-38", owner: "Уваров Сергей Николаевич", inn: "616612442811", ogrnip: "318619600029424", email: "s.n.uwarow@mail.ru", banking: "40802810409600000092 ПАО КБ \"Центр -Инвест\"", fullRequisites: "ИП Уваров Сергей Николаевич\n\nИНН 616612442811, ОГРНИП 318619600029424\nАдрес: г. Ростов-на-Дону, пр. Стачки 210\nр/с 40802810409600000092\nПАО КБ \"Центр-Инвест\"" },
-      { id: 56, name: "Домиан Первые Соловушки", address: "г. Ростов-на-Дону, ул. Вятская 57", phone: "+7-918-558-73-72", owner: "Червоная Елена Алексеевна", inn: "220909657200", ogrnip: "325619600087860", email: "elena.chervonaja@bk.ru", banking: "р/с 40802810352740004930, Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону, к/с 30101810600000000602, БИК 046015602", fullRequisites: "ИП Червоная Елена Алексеевна\n\nИНН 220909657200, ОГРНИП 325619600087860\nАдрес: г. Ростов-на-Дону, ул. Вятская 57\nр/с 40802810352740004930\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 57, name: "Домиан Миллениум", address: "г. Ростов-на-Дону, ул. Семашко 114, офис 208", phone: "+7-908-171-50-32", owner: "Черевченко Кирилл", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "Адрес: г. Ростов-на-Дону, ул. Семашко 114, офис 208" },
-      { id: 58, name: "Домиан Кристалл", address: "г. Ростов-на-Дону, ЖК Екатерининский, ул. Магнитогорская 1а", phone: "+7-928-138-66-30", owner: "Чумакова Лариса Геннадиевна", inn: "615511722600", ogrnip: "324619600085626", email: "domian_kristall@mai.ru", banking: "р/с 40802810852090424401 в Юго-Западном банке ПАО Сбербанк г. Ростове-на-Дону, БИК 046015602, к/с 30101810600000000602", fullRequisites: "ИП Чумакова Лариса Геннадиевна\n\nИНН 615511722600, ОГРНИП 324619600085626\nАдрес: г. Ростов-на-Дону, ЖК Екатерининский, ул. Магнитогорская 1а\nр/с 40802810852090424401\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 59, name: "Западный 5", address: "г. Ростов-на-Дону, ул. Зорге 56", phone: "+7-928-775-54-43", owner: "Чуносов Михаил Сергеевич", inn: "616117980098", ogrnip: "31861960005831", email: "mike.rostov@mail.ru", banking: "р/с 40802810826140001499 ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\" к/с 30101810500000000207, БИК 046015207", fullRequisites: "ИП Чуносов Михаил Сергеевич\n\nИНН 616117980098, ОГРНИП 31861960005831\nАдрес: г. Ростов-на-Дону, ул. Зорге 56\nр/с 40802810826140001499\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nКор. счёт: 30101810500000000207\nБИК 046015207" },
-      { id: 60, name: "Горизонт", address: "г. Ростов-на-Дону, ул. Ларина 45, стр. 2", phone: "+7-950-868-10-00", owner: "Чуприна Екатерина Викторовна", inn: "616113019969", ogrnip: "319619600017695", email: "domain.gorizont@ya.ru", banking: "р/с 40802810052740003095 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону, к/с 30101810600000000602, БИК 046015602", fullRequisites: "ИП Чуприна Екатерина Викторовна\n\nИНН 616113019969, ОГРНИП 319619600017695\nАдрес: г. Ростов-на-Дону, ул. Ларина 45, стр. 2\nр/с 40802810052740003095\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 61, name: "Домиан Таганрог", address: "г. Таганрог, ул. Социалистическая 2, офис 310", phone: "+7-938-143-33-01", owner: "Шаповалов Сергей Олегович", inn: "615424204391", ogrnip: "324619600160280", email: "", banking: "", fullRequisites: "ИП Шаповалов Сергей Олегович\n\nИНН 615424204391, ОГРНИП 324619600160280\nАдрес: г. Таганрог, ул. Социалистическая 2, офис 310" },
-      { id: 62, name: "Западный 11", address: "г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж", phone: "+7-988-580-14-73", owner: "Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "р/с 40802810752090008590 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 63, name: "Полёт", address: "г. Ростов-на-Дону, ул. Берберовская 24", phone: "+7-918-521-51-52", owner: "Юдин Александр", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "Адрес: г. Ростов-на-Дону, ул. Берберовская 24" },
-      { id: 64, name: "Восточный", address: "г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5", phone: "+7-908-180-42-13", owner: "Яцык Екатерина Валентиновна", inn: "616710033607", ogrnip: "316619600234309", email: "Strochka_rnd@mail.ru", banking: "Р/с 40802810052090451025\nК/с 30101810600000000602\nБик 046015602\nПао Сбербанк", fullRequisites: "ИП Яцык Екатерина Валентиновна\n\nИНН 616710033607, ОГРНИП 316619600234309\nАдрес: г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5\nр/с 40802810052090451025\nПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 65, name: "Аллея Домиан", address: "г. Ростов-на-Дону, ул. Маршала Жукова 16/6", phone: "+7-952-607-92-22", owner: "Лизунова Татьяна Сергеевна", inn: "232704657746", ogrnip: "425619601175600", email: "", banking: "рс 40802810026140006566 АО Альфа-Банк БИК 046015207 К.С 30101810500000000207", fullRequisites: "ИП Лизунова Татьяна Сергеевна\n\nИНН 232704657746, ОГРНИП 425619601175600\nАдрес: г. Ростов-на-Дону, ул. Маршала Жукова 16/6\nр/с 40802810026140006566\nАО Альфа-Банк\nБИК 046015207\nКор. счёт: 30101810500000000207" },
-      { id: 66, name: "Домиан Кореновск", address: "г. Кореновск, ул. Красная 23", phone: "+7-918-364-45-00", owner: "Глоба Оксана Николаевна", inn: "233504793704", ogrnip: "324237500271058", email: "", banking: "РС 40802810930000475689 КРАСНОДАРСКОЕ ОТДЕЛЕНИЕ N8619 ПАО СБЕРБАНК БИК: 040349602 Корсчёт: 30101810100000000602", fullRequisites: "ИП Глоба Оксана Николаевна\n\nИНН 233504793704, ОГРНИП 324237500271058\nАдрес: г. Кореновск, ул. Красная 23\nр/с 40802810930000475689\nКРАСНОДАРСКОЕ ОТДЕЛЕНИЕ N8619 ПАО СБЕРБАНК\nБИК: 040349602\nКор. счёт: 30101810100000000602" },
-      { id: 67, name: "Домиан Феникс", address: "г. Ростов-на-Дону, ул. Троллейбусная 24/2В, 6 этаж, каб. 617", phone: "+7-988-990-89-13", owner: "Данилов Сергей Константинович", inn: "325619600101034", ogrnip: "325619600101034", email: "", banking: "РС 40802810600008234242 Название банка: АО «ТБанк»\nБИК: 044525974\nКорреспондентский счёт: 30101810145250000974", fullRequisites: "ИП Данилов Сергей Константинович\n\nИНН 325619600101034, ОГРНИП 325619600101034\nАдрес: г. Ростов-на-Дону, ул. Троллейбусная 24/2В, 6 этаж, каб. 617\nр/с 40802810600008234242\nАО «ТБанк»\nБИК: 044525974\nКор. счёт: 30101810145250000974" },
-      { id: 68, name: "Комфорт", address: "г. Ростов-на-Дону, ул. Извилистая 17а", phone: "+7-961-321-90-69", owner: "Дионисов Евгений Александрович", inn: "616803377142", ogrnip: "321619600246631", email: "dionisoffrealty@yandex.ru", banking: "АО «ТБанк» БИК банка Расчетный счет\n40802810900002948522\n044525974 Корреспондентский счет банка\n30101810145250000974", fullRequisites: "ИП Дионисов Евгений Александрович\n\nИНН 616803377142, ОГРНИП 321619600246631\nАдрес: г. Ростов-на-Дону, ул. Извилистая 17а\nр/с 40802810900002948522\nАО «ТБанк»\nБИК: 044525974\nКор. счёт: 30101810145250000974" },
-      { id: 69, name: "Лайф", address: "г. Ростов-на-Дону, ул. Армянская 10", phone: "+7-909-404-34-17", owner: "Геворкян Овсеп Мкртичович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "Адрес: г. Ростов-на-Дону, ул. Армянская 10" },
-      { id: 70, name: "Красный Верес", address: "г. Ростов-на-Дону, ул. Вересаева 101/3, стр. 2", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Вересаева 101/3, стр. 2\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 71, name: "Центр 1", address: "г. Ростов-на-Дону, ул. Красноармейская 121, 2 этаж", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121, 2 этаж\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 72, name: "Южный", address: "г. Ростов-на-Дону, ул. Красноармейская 121", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 73, name: "Северный 1", address: "г. Ростов-на-Дону, пр. Космонавтов 32в, 3 этаж", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, пр. Космонавтов 32в, 3 этаж\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 74, name: "Октябрьский", address: "г. Ростов-на-Дону, ул. Ленина 46", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Ленина 46\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 75, name: "Левенцовский 2", address: "г. Ростов-на-Дону, ул. Еременко 100/70", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Еременко 100/70\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 76, name: "Западный 1", address: "г. Ростов-на-Дону, пр. Коммунистический 25", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, пр. Коммунистический 25\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 77, name: "Краснодар 1", address: "г. Краснодар, Плановый проезд 5", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Краснодар, Плановый проезд 5\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" },
-      { id: 78, name: "Сальск-Пушкинский", address: "г. Сальск, ул. Пушкина 32", phone: "8 (863) 300-00-06", owner: "ИП Орлов Павел Викторович", inn: "", ogrnip: "", email: "", banking: "", fullRequisites: "ИП Орлов Павел Викторович\n\nАдрес: г. Сальск, ул. Пушкина 32\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602" }
+      {"id":1,"excelOrder":1,"name":"Квартал","address":"г. Аксай, ул. Толпинского 130, офис 4","phone":"+7-953-609-11-22","owner":"Алиева Зухра","legalName":"ИП Алиева Зухра Рахитовна","inn":"662104294378","ogrnip":"32561960005191","email":"zuhra_2010_aidan@mail.ru","banking":"рс 40802810617910000381\nИНН: 662104294378\nБанк: АО \"АЛЬФА-БАНК\"\nБИК: 044525593\nКор. счёт: 30101810200000000593","fullRequisites":"ИП Алиева Зухра Рахитовна\nСобственник: Алиева Зухра\nИНН 662104294378, ОГРНИП 32561960005191\nАдрес: г. Аксай, ул. Толпинского 130, офис 4\nТелефон: +7-953-609-11-22\nПочта: zuhra_2010_aidan@mail.ru\n\nрс 40802810617910000381\nИНН: 662104294378\nБанк: АО \"АЛЬФА-БАНК\"\nБИК: 044525593\nКор. счёт: 30101810200000000593"},
+      {"id":2,"excelOrder":2,"name":"Домиан Добровольского","address":"г. Ростов-на-Дону, ул. Добровольского 13","phone":"+7-909-410-10-40","owner":"Баев Денис","legalName":"ИП Баев Денис Владимирович","inn":"616613990495","ogrnip":"322619600007988","email":"Bdvrostov@mail.ru","banking":"р/с 40802810126300001829 Филиал Ростовский АО Альфа-Банк кор.счёт 30101810500000000207 БИК 046015207","fullRequisites":"ИП Баев Денис Владимирович\nСобственник: Баев Денис\nИНН 616613990495, ОГРНИП 322619600007988\nАдрес: г. Ростов-на-Дону, ул. Добровольского 13\nТелефон: +7-909-410-10-40\nПочта: Bdvrostov@mail.ru\n\nр/с 40802810126300001829 Филиал Ростовский АО Альфа-Банк кор.счёт 30101810500000000207 БИК 046015207"},
+      {"id":3,"excelOrder":3,"name":"Домиан-Шолохова","address":"г. Ростов-на-Дону, 14 линия 84 «б»","phone":"+7-903-403-23-06","owner":"Баранова Ольга","legalName":"ИП Баранова Ольга Борисовна","inn":"616710699958","ogrnip":"318619600012992","email":"monaxv@mail.ru","banking":"1. Р/ С :\n40802810620000525411 в ООО «Банк Точка», БИК: 044525104, к/с: 30101810745374525104","fullRequisites":"ИП Баранова Ольга Борисовна\nСобственник: Баранова Ольга\nИНН 616710699958, ОГРНИП 318619600012992\nАдрес: г. Ростов-на-Дону, 14 линия 84 «б»\nТелефон: +7-903-403-23-06\nПочта: monaxv@mail.ru\n\n1. Р/ С :\n40802810620000525411 в ООО «Банк Точка», БИК: 044525104, к/с: 30101810745374525104"},
+      {"id":5,"excelOrder":4,"name":"Батайск 2","address":"г. Батайск, ул. Куйбышева 127","phone":"+7-928-133-64-32","owner":"Брагин Андрей","legalName":"ИП Брагин Андрей Владимирович","inn":"614102148704","ogrnip":"316619600182061","email":"b2domian@mail.ru","banking":"р/с40802810006760000004 корр./с30101810145250000411, БИК 044525411Филиал «Центральный» ПАО «БАНК ВТБ»","fullRequisites":"ИП Брагин Андрей Владимирович\nСобственник: Брагин Андрей\nИНН 614102148704, ОГРНИП 316619600182061\nАдрес: г. Батайск, ул. Куйбышева 127\nТелефон: +7-928-133-64-32\nПочта: b2domian@mail.ru\n\nр/с40802810006760000004 корр./с30101810145250000411, БИК 044525411Филиал «Центральный» ПАО «БАНК ВТБ»"},
+      {"id":6,"excelOrder":5,"name":"Домиан «Семейный»","address":"г. Батайск, ул. Заводская 184, офис 22","phone":"+7-988-539-73-42","owner":"Брыкалина Лилия","legalName":"ИП Брыкалина Лилия Евгеньевна","inn":"615101072300","ogrnip":"321619600189973","email":"karmazina-lilya@mail.ru","banking":"р/с : 40802810852040000231 Бик 046015602 к/с 30101810600000000602 Юго-Западный Банк ПАО Сбербанк","fullRequisites":"ИП Брыкалина Лилия Евгеньевна\nСобственник: Брыкалина Лилия\nИНН 615101072300, ОГРНИП 321619600189973\nАдрес: г. Батайск, ул. Заводская 184, офис 22\nТелефон: +7-988-539-73-42\nПочта: karmazina-lilya@mail.ru\n\nр/с : 40802810852040000231 Бик 046015602 к/с 30101810600000000602 Юго-Западный Банк ПАО Сбербанк"},
+      {"id":7,"excelOrder":6,"name":"Шахты на Маяковского","address":"г. Шахты, ул. Маяковского 18А","phone":"+7-918-507-10-00","owner":"Воронина Мария","legalName":"ИП Воронина Мария Петровна","inn":"262810552536","ogrnip":"324619600204770","email":"Babushkina_Mariya.10@mail.ru","banking":"р/с 40802810352090442239 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Воронина Мария Петровна\nСобственник: Воронина Мария\nИНН 262810552536, ОГРНИП 324619600204770\nАдрес: г. Шахты, ул. Маяковского 18А\nТелефон: +7-918-507-10-00\nПочта: Babushkina_Mariya.10@mail.ru\n\nр/с 40802810352090442239 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602"},
+      {"id":8,"excelOrder":7,"name":"Домиан Коммерция","address":"Временно без офиса","phone":"+7-928-229-47-77","owner":"Галкин Алексей / Шаповалов Виктор","legalName":"ИП ШАПОВАЛОВ ВИКТОР ЮРЬЕВИЧ","inn":"614105200744","ogrnip":"325619600080754","email":"Domian.com@yandex.ru","banking":"Расчётный счёт: 40802810652740004711;\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК 046015602\nКорсчёт: 30101810600000000602","fullRequisites":"ИП ШАПОВАЛОВ ВИКТОР ЮРЬЕВИЧ\nСобственник: Галкин Алексей / Шаповалов Виктор\nИНН 614105200744, ОГРНИП 325619600080754\nАдрес: Временно без офиса\nТелефон: +7-928-229-47-77\nПочта: Domian.com@yandex.ru\n\nРасчётный счёт: 40802810652740004711;\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК 046015602\nКорсчёт: 30101810600000000602"},
+      {"id":9,"excelOrder":8,"name":"Гвардейский","address":"г. Ростов-на-Дону, пр. Буденновский 59","phone":"+7-928-611-94-11","owner":"Грибенюк Светлана","legalName":"ИП ГРИБЕНЮК СВЕТЛАНА ЛЕОНИДОВНА","inn":"615416655175","ogrnip":"304616228500015","email":"bezglasnaya-19@yandex.ru","banking":"р/с 40802810826140006274\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nк/с 30101810500000000207\n046015207","fullRequisites":"ИП ГРИБЕНЮК СВЕТЛАНА ЛЕОНИДОВНА\nСобственник: Грибенюк Светлана\nИНН 615416655175, ОГРНИП 304616228500015\nАдрес: г. Ростов-на-Дону, пр. Буденновский 59\nТелефон: +7-928-611-94-11\nПочта: bezglasnaya-19@yandex.ru\n\nр/с 40802810826140006274\nФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК\"\nк/с 30101810500000000207\n046015207"},
+      {"id":10,"excelOrder":9,"name":"Аксай Центральный","address":"г. Аксай, ул. Заводская 22","phone":"+7-952-588-83-67","owner":"Гуков Денис","legalName":"ИП ГУКОВ ДЕНИС ИВАНОВИЧ","inn":"616111710000","ogrnip":"318619600087382","email":"","banking":"40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974,","fullRequisites":"ИП ГУКОВ ДЕНИС ИВАНОВИЧ\nСобственник: Гуков Денис\nИНН 616111710000, ОГРНИП 318619600087382\nАдрес: г. Аксай, ул. Заводская 22\nТелефон: +7-952-588-83-67\n\n40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974,"},
+      {"id":11,"excelOrder":10,"name":"Нариманова","address":"Временно без офиса","phone":"+7-952-588-83-67","owner":"Гуков Денис","legalName":"ИП ГУКОВ ДЕНИС ИВАНОВИЧ","inn":"616111710000","ogrnip":"318619600087382","email":"","banking":"40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974,","fullRequisites":"ИП ГУКОВ ДЕНИС ИВАНОВИЧ\nСобственник: Гуков Денис\nИНН 616111710000, ОГРНИП 318619600087382\nАдрес: Временно без офиса\nТелефон: +7-952-588-83-67\n\n40802810600000548499,\nБанк\nАО «ТБанк»,\nИНН банка\n7710140679,\nБИК банка\n044525974,\nКорреспондентский счет банка\n30101810145250000974,"},
+      {"id":12,"excelOrder":11,"name":"Домиан офис Даниловых","address":"г. Ростов-на-Дону, ул. Сальский 101, офис 121","phone":"+7-988-990-89-13","owner":"Данилова Ольга Георгиевна","legalName":"ИП Данилова Ольга Георгиевна","inn":"614603129156","ogrnip":"322619600036848","email":"Olgageorgievna87@yandex.ru","banking":"р/с 40802810952090106690 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Данилова Ольга Георгиевна\nСобственник: Данилова Ольга Георгиевна\nИНН 614603129156, ОГРНИП 322619600036848\nАдрес: г. Ростов-на-Дону, ул. Сальский 101, офис 121\nТелефон: +7-988-990-89-13\nПочта: Olgageorgievna87@yandex.ru\n\nр/с 40802810952090106690 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602"},
+      {"id":15,"excelOrder":12,"name":"Батайск Южный","address":"г. Батайск, ул. Рабочая 77, 3 этаж","phone":"+7-908-513-78-42","owner":"Ефремова Наталья","legalName":"ИП Ефремова Наталья Вячеславовна","inn":"614901636754","ogrnip":"325619600009180","email":"Vampiressa83@mail.ru","banking":"р/с 40802810026270007215 Филиал \"Ростовский\" АО \"Альфа-Банк\" к/с 30101810500000000207 БИК 046015207","fullRequisites":"ИП Ефремова Наталья Вячеславовна\nСобственник: Ефремова Наталья\nИНН 614901636754, ОГРНИП 325619600009180\nАдрес: г. Батайск, ул. Рабочая 77, 3 этаж\nТелефон: +7-908-513-78-42\nПочта: Vampiressa83@mail.ru\n\nр/с 40802810026270007215 Филиал \"Ростовский\" АО \"Альфа-Банк\" к/с 30101810500000000207 БИК 046015207"},
+      {"id":16,"excelOrder":13,"name":"Домиан Малиновского","address":"г. Ростов-на-Дону, ул. Малиновского 46а/27, офис 37–38","phone":"+7-918-574-35-20","owner":"Заичкин Иван","legalName":"ИП Заичкин Иван Николаевич","inn":"611804206430","ogrnip":"324619600099287","email":"zaichkin.ivan1501@yandex.ru","banking":"⁠р/с 40802810126360002509\nк/с 30101810645374525068\nБИК 044525068\nООО Озон Банк","fullRequisites":"ИП Заичкин Иван Николаевич\nСобственник: Заичкин Иван\nИНН 611804206430, ОГРНИП 324619600099287\nАдрес: г. Ростов-на-Дону, ул. Малиновского 46а/27, офис 37–38\nТелефон: +7-918-574-35-20\nПочта: zaichkin.ivan1501@yandex.ru\n\n⁠р/с 40802810126360002509\nк/с 30101810645374525068\nБИК 044525068\nООО Озон Банк"},
+      {"id":17,"excelOrder":14,"name":"ВектоР Домиан","address":"г. Ростов-на-Дону, ул. Зорге 17, офис 2","phone":"+7-961-316-57-17","owner":"Залещенко Анна","legalName":"ИП Биджиева Анна Александровна","inn":"612701340763","ogrnip":"321619600003868","email":"anna.zaleshenko@yandex.ru","banking":"р/с 40802810952090075420\nЮго-Западный Банк ПАО Сбербанк\nкор.счет 30101810600000000602\nБИК 046015602","fullRequisites":"ИП Биджиева Анна Александровна\nСобственник: Залещенко Анна\nИНН 612701340763, ОГРНИП 321619600003868\nАдрес: г. Ростов-на-Дону, ул. Зорге 17, офис 2\nТелефон: +7-961-316-57-17\nПочта: anna.zaleshenko@yandex.ru\n\nр/с 40802810952090075420\nЮго-Западный Банк ПАО Сбербанк\nкор.счет 30101810600000000602\nБИК 046015602"},
+      {"id":18,"excelOrder":15,"name":"Новочеркасск 2","address":"г. Новочеркасск, ул. Народная 1, офис 114","phone":"+7-938-154-59-15","owner":"Зеленьков Александр","legalName":"ИП Зеленьков Александр Михайлович","inn":"61490663404","ogrnip":"315617300002118","email":"an_domian@mail.ru","banking":"Расчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602","fullRequisites":"ИП Зеленьков Александр Михайлович\nСобственник: Зеленьков Александр\nИНН 61490663404, ОГРНИП 315617300002118\nАдрес: г. Новочеркасск, ул. Народная 1, офис 114\nТелефон: +7-938-154-59-15\nПочта: an_domian@mail.ru\n\nРасчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602"},
+      {"id":19,"excelOrder":16,"name":"Домиан Сельмаш","address":"г. Ростов-на-Дону, ул. 1-й конной армии 13в, офис 22","phone":"+7-938-154-59-15","owner":"Зеленьков Александр","legalName":"ИП Зеленьков Александр Михайлович","inn":"61490663404","ogrnip":"315617300002118","email":"an_domian@mail.ru","banking":"Расчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602","fullRequisites":"ИП Зеленьков Александр Михайлович\nСобственник: Зеленьков Александр\nИНН 61490663404, ОГРНИП 315617300002118\nАдрес: г. Ростов-на-Дону, ул. 1-й конной армии 13в, офис 22\nТелефон: +7-938-154-59-15\nПочта: an_domian@mail.ru\n\nРасчётный счёт: 40802 810 1 5209 0109374\n\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКорсчёт: 30101 810 6 0000 0000602"},
+      {"id":20,"excelOrder":17,"name":"Домиан Северный-3","address":"г. Ростов-на-Дону, пр. Космонавтов 31В/21В, 3 этаж, офис 30","phone":"+7-928-229-12-44","owner":"Кивва Ирина","legalName":"ИП Кивва Ирина Васильевна","inn":"615000646692","ogrnip":"312619330500047","email":"rostovatlasan@yandex.ru","banking":"Расчетный счет: 40802810252740022559\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК БИК: 046015602 Корр. счет:\n30101810600000000602","fullRequisites":"ИП Кивва Ирина Васильевна\nСобственник: Кивва Ирина\nИНН 615000646692, ОГРНИП 312619330500047\nАдрес: г. Ростов-на-Дону, пр. Космонавтов 31В/21В, 3 этаж, офис 30\nТелефон: +7-928-229-12-44\nПочта: rostovatlasan@yandex.ru\n\nРасчетный счет: 40802810252740022559\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК БИК: 046015602 Корр. счет:\n30101810600000000602"},
+      {"id":21,"excelOrder":18,"name":"Суворовский 2","address":"г. Ростов-на-Дону, ул. Петренко 18","phone":"+7-988-996-13-00","owner":"Князев Павел","legalName":"ИП Князева Лариса Александровна","inn":"612400841004","ogrnip":"321619600016360","email":"Knyazevp83@mail.ru","banking":"р/с 40802810352090426543\nПАО Сбербанк г. Ростов-на-Дону, ул. Евдокимова, д. 37 Доп. офис N5221/01\nк/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Князева Лариса Александровна\nСобственник: Князев Павел\nИНН 612400841004, ОГРНИП 321619600016360\nАдрес: г. Ростов-на-Дону, ул. Петренко 18\nТелефон: +7-988-996-13-00\nПочта: Knyazevp83@mail.ru\n\nр/с 40802810352090426543\nПАО Сбербанк г. Ростов-на-Дону, ул. Евдокимова, д. 37 Доп. офис N5221/01\nк/с 30101810600000000602 БИК 046015602"},
+      {"id":22,"excelOrder":19,"name":"ЛеМар Вересаево","address":"г. Ростов-на-Дону, ул. Берберовская 2/101, стр. 2, офис 12","phone":"+7-988-571-57-14","owner":"Козлова Елена","legalName":"Ип Козлова Елена Александровна","inn":"616610539710","ogrnip":"323619600168391","email":"elena.kozlovva@yandex.ru","banking":"р/с 40802810900810180912 ФИЛИАЛ \"ЦЕНТРАЛЬНЫЙ\" БАНКА ВТБ (ПАО), к/с 30101810145250000411 бик 044525411","fullRequisites":"Ип Козлова Елена Александровна\nСобственник: Козлова Елена\nИНН 616610539710, ОГРНИП 323619600168391\nАдрес: г. Ростов-на-Дону, ул. Берберовская 2/101, стр. 2, офис 12\nТелефон: +7-988-571-57-14\nПочта: elena.kozlovva@yandex.ru\n\nр/с 40802810900810180912 ФИЛИАЛ \"ЦЕНТРАЛЬНЫЙ\" БАНКА ВТБ (ПАО), к/с 30101810145250000411 бик 044525411"},
+      {"id":23,"excelOrder":20,"name":"Домиан Эксперт","address":"г. Ростов-на-Дону, ул. Б. Садовая 162/70, кв. 7","phone":"+7-918-558-78-98","owner":"Котовская Ольга","legalName":"ИП Котовская Ольга Андреевна","inn":"616603300375","ogrnip":"310616406100044","email":"domianexpert@mail.ru","banking":"р/с 40802810452090088221 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101 810 6 0000 0000602 БИК 046015602","fullRequisites":"ИП Котовская Ольга Андреевна\nСобственник: Котовская Ольга\nИНН 616603300375, ОГРНИП 310616406100044\nАдрес: г. Ростов-на-Дону, ул. Б. Садовая 162/70, кв. 7\nТелефон: +7-918-558-78-98\nПочта: domianexpert@mail.ru\n\nр/с 40802810452090088221 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101 810 6 0000 0000602 БИК 046015602"},
+      {"id":24,"excelOrder":21,"name":"Домиан Рантье","address":"г. Ростов-на-Дону, ул. Красноармейская 121","phone":"+7-905-455-96-56","owner":"Кравцов Андрей","legalName":"ИП Кравцов Андрей Федорович","inn":"615490300115","ogrnip":"316619600249052","email":"domianandrey@yandex.ru","banking":"Р/с 40802810000000123278\nАО «ТБанк»\nк/сч 30101810145250000974\nБИК 044525974","fullRequisites":"ИП Кравцов Андрей Федорович\nСобственник: Кравцов Андрей\nИНН 615490300115, ОГРНИП 316619600249052\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121\nТелефон: +7-905-455-96-56\nПочта: domianandrey@yandex.ru\n\nР/с 40802810000000123278\nАО «ТБанк»\nк/сч 30101810145250000974\nБИК 044525974"},
+      {"id":25,"excelOrder":22,"name":"Новочеркасск 1","address":"г. Новочеркасск, пр. Платовский 92","phone":"+7-903-463-31-25","owner":"Лебедев Никита","legalName":"ИП Лебедев Никита Сергеевич","inn":"615015517925","ogrnip":"312618310200032","email":"domiannovoch@gmail.com","banking":"р/с 40802810620000206808\nк/с 30101810745374525104\nБИК 044525104 ООО \"Банк Точка \"","fullRequisites":"ИП Лебедев Никита Сергеевич\nСобственник: Лебедев Никита\nИНН 615015517925, ОГРНИП 312618310200032\nАдрес: г. Новочеркасск, пр. Платовский 92\nТелефон: +7-903-463-31-25\nПочта: domiannovoch@gmail.com\n\nр/с 40802810620000206808\nк/с 30101810745374525104\nБИК 044525104 ООО \"Банк Точка \""},
+      {"id":26,"excelOrder":23,"name":"Севастополь","address":"г. Севастополь, ул. Астана Кесаева 3б, 4 этаж, офис 25","phone":"+7-903-463-31-25","owner":"Бородина Наталья","legalName":"ИП Бородина Наталья Витальевна","inn":"612501184468","ogrnip":"325619600013370","email":"","banking":"р/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\"","fullRequisites":"ИП Бородина Наталья Витальевна\nСобственник: Бородина Наталья\nИНН 612501184468, ОГРНИП 325619600013370\nАдрес: г. Севастополь, ул. Астана Кесаева 3б, 4 этаж, офис 25\nТелефон: +7-903-463-31-25\n\nр/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\""},
+      {"id":27,"excelOrder":24,"name":"Западный Алмаз","address":"г. Ростов-на-Дону, пр. Стачки 188","phone":"+7-928-754-41-47","owner":"Лобань Илона","legalName":"ИП ЛОБАНЬ ИЛОНА СЕРГЕЕВНА","inn":"263013312006","ogrnip":"324619600257030","email":"Ilona.loban75@mail.ru","banking":"Расчётный счёт: 40802810452090449129\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 046015602\nКорсчёт: 30101810600000000602","fullRequisites":"ИП ЛОБАНЬ ИЛОНА СЕРГЕЕВНА\nСобственник: Лобань Илона\nИНН 263013312006, ОГРНИП 324619600257030\nАдрес: г. Ростов-на-Дону, пр. Стачки 188\nТелефон: +7-928-754-41-47\nПочта: Ilona.loban75@mail.ru\n\nРасчётный счёт: 40802810452090449129\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 046015602\nКорсчёт: 30101810600000000602"},
+      {"id":28,"excelOrder":25,"name":"Домиан Нагибина","address":"г. Ростов-на-Дону, ул. Ленина 64","phone":"+7-903-401-55-45","owner":"Марков Алексей","legalName":"ИП Марков Алексей Владимирович","inn":"616107282175","ogrnip":"320619600162378","email":"2215545@bk.ru","banking":"Номер счета: 40802810326080004551, Банк: ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК», БИК: 046015207, К/с: 30101810500000000207","fullRequisites":"ИП Марков Алексей Владимирович\nСобственник: Марков Алексей\nИНН 616107282175, ОГРНИП 320619600162378\nАдрес: г. Ростов-на-Дону, ул. Ленина 64\nТелефон: +7-903-401-55-45\nПочта: 2215545@bk.ru\n\nНомер счета: 40802810326080004551, Банк: ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФА-БАНК», БИК: 046015207, К/с: 30101810500000000207"},
+      {"id":29,"excelOrder":26,"name":"Аксай","address":"г. Аксай, ул. Ленина 41","phone":"+7-938-147-96-60","owner":"Межов Александр","legalName":"ИП Приходченко Ирина Леонидовна","inn":"613203719423","ogrnip":"317619600161221","email":"m89381479660@yandex.ru","banking":"Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411 БИК 044525411","fullRequisites":"ИП Приходченко Ирина Леонидовна\nСобственник: Межов Александр\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: г. Аксай, ул. Ленина 41\nТелефон: +7-938-147-96-60\nПочта: m89381479660@yandex.ru\n\nРасчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411 БИК 044525411"},
+      {"id":32,"excelOrder":27,"name":"Янтарный","address":"п. Камышеваха, ул. Платиновая 10/26","phone":"+7-938-147-96-60","owner":"Межов Александр","legalName":"ИП Приходченко Ирина Леонидовна","inn":"613203719423","ogrnip":"317619600161221","email":"m89381479660@yandex.ru","banking":"Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411 БИК 044525411","fullRequisites":"ИП Приходченко Ирина Леонидовна\nСобственник: Межов Александр\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: п. Камышеваха, ул. Платиновая 10/26\nТелефон: +7-938-147-96-60\nПочта: m89381479660@yandex.ru\n\nРасчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411 БИК 044525411"},
+      {"id":33,"excelOrder":28,"name":"Домиан Риелт","address":"г. Ростов-на-Дону, ул. Туполева 16е, офис 523","phone":"+7-928-197-03-77","owner":"Молчанов Андрей","legalName":"ИП Молчанов Андрей Владимирович","inn":"616602237586","ogrnip":"324619600154850","email":"","banking":"40802810326000019076 ФИЛИАЛ Ростовский АО Альфа-Банк Бик 046015207 КС 30101810500000000207","fullRequisites":"ИП Молчанов Андрей Владимирович\nСобственник: Молчанов Андрей\nИНН 616602237586, ОГРНИП 324619600154850\nАдрес: г. Ростов-на-Дону, ул. Туполева 16е, офис 523\nТелефон: +7-928-197-03-77\n\n40802810326000019076 ФИЛИАЛ Ростовский АО Альфа-Банк Бик 046015207 КС 30101810500000000207"},
+      {"id":35,"excelOrder":29,"name":"Домиан Верхняя Александровка","address":"г. Ростов-на-Дону, ул. 40 лет победы 156/7","phone":"+7-999-691-46-34","owner":"Некрасова Юлия (Расторжение)","legalName":"ИП Некрасова Юлия Петровна","inn":"616511782591","ogrnip":"312616414900010","email":"d9996914634@gmail.com","banking":"р/с 40817810500017509121 в АО «Тинькофф Банк»\nк/с 30101810145250000974\nБИК 044525974","fullRequisites":"ИП Некрасова Юлия Петровна\nСобственник: Некрасова Юлия (Расторжение)\nИНН 616511782591, ОГРНИП 312616414900010\nАдрес: г. Ростов-на-Дону, ул. 40 лет победы 156/7\nТелефон: +7-999-691-46-34\nПочта: d9996914634@gmail.com\n\nр/с 40817810500017509121 в АО «Тинькофф Банк»\nк/с 30101810145250000974\nБИК 044525974"},
+      {"id":36,"excelOrder":30,"name":"Золотой квадрат","address":"г. Ростов-на-Дону, ул. Малиновского 66/1","phone":"+7-905-427-43-47","owner":"Немченко Вадим","legalName":"ИП Немченко Вадим Вадимович","inn":"616802670941","ogrnip":"321619600021006","email":"","banking":"40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК","fullRequisites":"ИП Немченко Вадим Вадимович\nСобственник: Немченко Вадим\nИНН 616802670941, ОГРНИП 321619600021006\nАдрес: г. Ростов-на-Дону, ул. Малиновского 66/1\nТелефон: +7-905-427-43-47\n\n40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК"},
+      {"id":37,"excelOrder":31,"name":"Азов Первый","address":"Временно без офиса","phone":"+7-905-427-43-47","owner":"Немченко Вадим","legalName":"ИП Немченко Вадим Вадимович","inn":"616802670941","ogrnip":"321619600021006","email":"","banking":"40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК","fullRequisites":"ИП Немченко Вадим Вадимович\nСобственник: Немченко Вадим\nИНН 616802670941, ОГРНИП 321619600021006\nАдрес: Временно без офиса\nТелефон: +7-905-427-43-47\n\n40802810052090075236 р/с, 30101810600000000602 к/р, 046015602 БИК, ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК"},
+      {"id":38,"excelOrder":32,"name":"Капитал","address":"г. Ростов-на-Дону, ул. Подвойского 58/85","phone":"+7-988-556-98-88","owner":"Обдул Алла","legalName":"ИП Обдул Алла Михайловна","inn":"526104307869","ogrnip":"325619600026425","email":"","banking":"40802810520000552759 ООО Точка Банк Бик 044525104 КС 30101810745374525104","fullRequisites":"ИП Обдул Алла Михайловна\nСобственник: Обдул Алла\nИНН 526104307869, ОГРНИП 325619600026425\nАдрес: г. Ростов-на-Дону, ул. Подвойского 58/85\nТелефон: +7-988-556-98-88\n\n40802810520000552759 ООО Точка Банк Бик 044525104 КС 30101810745374525104"},
+      {"id":39,"excelOrder":33,"name":"Западный 2","address":"г. Ростов-на-Дону, ул. Зорге 64б","phone":"+7-961-296-90-00","owner":"Панасенко Артем","legalName":"ИП Панасенко Артем Юрьевич","inn":"614807776440","ogrnip":"312619107900041","email":"","banking":"рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715","fullRequisites":"ИП Панасенко Артем Юрьевич\nСобственник: Панасенко Артем\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: г. Ростов-на-Дону, ул. Зорге 64б\nТелефон: +7-961-296-90-00\n\nрс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715"},
+      {"id":40,"excelOrder":34,"name":"Домиан Премьер","address":"г. Ростов-на-Дону, ул. М. Горького 120, офис 22","phone":"+7-961-296-90-00","owner":"Панасенко Артем","legalName":"ИП Панасенко Артем Юрьевич","inn":"614807776440","ogrnip":"312619107900041","email":"","banking":"рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715","fullRequisites":"ИП Панасенко Артем Юрьевич\nСобственник: Панасенко Артем\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: г. Ростов-на-Дону, ул. М. Горького 120, офис 22\nТелефон: +7-961-296-90-00\n\nрс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715"},
+      {"id":41,"excelOrder":35,"name":"Батайск 1","address":"Временно без офиса","phone":"+7-918-532-58-87","owner":"Панасенко/Курмак Марина","legalName":"ИП Панасенко Артем Юрьевич","inn":"614807776440","ogrnip":"312619107900041","email":"","banking":"рс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715","fullRequisites":"ИП Панасенко Артем Юрьевич\nСобственник: Панасенко/Курмак Марина\nИНН 614807776440, ОГРНИП 312619107900041\nАдрес: Временно без офиса\nТелефон: +7-918-532-58-87\n\nрс 40802810101000012117 ГРКЦ ГУ ЦБ РФ РО кс 30101810100000000715 БИК 041806715"},
+      {"id":43,"excelOrder":36,"name":"Домиан Лермонт","address":"г. Ростов-на-Дону, ул. Лермонтовская 102","phone":"+7-913-983-53-13","owner":"Рубежанская Кристина","legalName":"ИП Рубежанская Кристина Андреевна","inn":"220502112115","ogrnip":"","email":"","banking":"40802 810 4 5209 0016950 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК БИК 046015602 КС 30101 810 6 0000 0000602","fullRequisites":"ИП Рубежанская Кристина Андреевна\nСобственник: Рубежанская Кристина\nИНН 220502112115\nАдрес: г. Ростов-на-Дону, ул. Лермонтовская 102\nТелефон: +7-913-983-53-13\n\n40802 810 4 5209 0016950 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК БИК 046015602 КС 30101 810 6 0000 0000602"},
+      {"id":44,"excelOrder":37,"name":"Новочеркасск Октябрьский","address":"г. Новочеркасск, ул. Калинина 65б","phone":"+7-951-519-55-59","owner":"Сафронов Андрей","legalName":"ИП Лебедев Никита Сергеевич","inn":"615015517925","ogrnip":"312618310200032","email":"domiannovoch@gmail.com","banking":"р/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\"","fullRequisites":"ИП Лебедев Никита Сергеевич\nСобственник: Сафронов Андрей\nИНН 615015517925, ОГРНИП 312618310200032\nАдрес: г. Новочеркасск, ул. Калинина 65б\nТелефон: +7-951-519-55-59\nПочта: domiannovoch@gmail.com\n\nр/с 40802810000000185588\nк/с 30101810145250000974\nБИК 044525974\nАО \"Т-БАНК\""},
+      {"id":46,"excelOrder":38,"name":"Меркурий","address":"г. Ростов-на-Дону, пр. Коммунистический 25","phone":"+7-928-270-80-98","owner":"Скрыпникова Наталья","legalName":"ИП СКРЫПНИКОВА НАТАЛЬЯ ФЕДОРОВНА","inn":"90103100798","ogrnip":"325619600047560","email":"NATA2708098@MAIL.RU","banking":"р/с 40802810352740023335 ЮГО- ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК 30101810600000000602 БИК 046015602","fullRequisites":"ИП СКРЫПНИКОВА НАТАЛЬЯ ФЕДОРОВНА\nСобственник: Скрыпникова Наталья\nИНН 90103100798, ОГРНИП 325619600047560\nАдрес: г. Ростов-на-Дону, пр. Коммунистический 25\nТелефон: +7-928-270-80-98\nПочта: NATA2708098@MAIL.RU\n\nр/с 40802810352740023335 ЮГО- ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК 30101810600000000602 БИК 046015602"},
+      {"id":47,"excelOrder":39,"name":"Офис на Пушкинской","address":"г. Ростов-на-Дону, ул. Пушкинская 206","phone":"+7-951-516-38-16","owner":"Смехнова Оксана","legalName":"ИП Смехнова Оксана Александровна","inn":"616715303416","ogrnip":"318619600152382","email":"domian.ug@yandex.ru","banking":"р/с 40802810126360002509 ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФАБАНК\"Г РОСТОВ-НА-ДОНУ\nк/с 30101810500000000207\nБИК 046015207","fullRequisites":"ИП Смехнова Оксана Александровна\nСобственник: Смехнова Оксана\nИНН 616715303416, ОГРНИП 318619600152382\nАдрес: г. Ростов-на-Дону, ул. Пушкинская 206\nТелефон: +7-951-516-38-16\nПочта: domian.ug@yandex.ru\n\nр/с 40802810126360002509 ФИЛИАЛ \"РОСТОВСКИЙ\" АО \"АЛЬФАБАНК\"Г РОСТОВ-НА-ДОНУ\nк/с 30101810500000000207\nБИК 046015207"},
+      {"id":48,"excelOrder":40,"name":"Домиан Свердловск ЛНР","address":"временно без офиса","phone":"+7-959-521-30-70","owner":"Теплинский Сергей","legalName":"","inn":"345933334847","ogrnip":"323940100200221","email":"","banking":"","fullRequisites":"Собственник: Теплинский Сергей\nИНН 345933334847, ОГРНИП 323940100200221\nАдрес: временно без офиса\nТелефон: +7-959-521-30-70"},
+      {"id":49,"excelOrder":41,"name":"Домиан Волгодонск Первый","address":"г. Волгодонск, ул. Энтузиастов 26б","phone":"+7-905-428-76-50","owner":"Тёркин Валерий","legalName":"ИП Теркин Валерий Владимирович","inn":"614301274189","ogrnip":"318619600202410","email":"domian.irina.1989@mail.ru","banking":"р/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Теркин Валерий Владимирович\nСобственник: Тёркин Валерий\nИНН 614301274189, ОГРНИП 318619600202410\nАдрес: г. Волгодонск, ул. Энтузиастов 26б\nТелефон: +7-905-428-76-50\nПочта: domian.irina.1989@mail.ru\n\nр/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602"},
+      {"id":50,"excelOrder":42,"name":"Западный Олимп","address":"г. Ростов-на-Дону, ул. Зорге 11","phone":"+7-905-428-76-50","owner":"Тёркин Валерий","legalName":"ИП Теркин Валерий Владимирович","inn":"614301274189","ogrnip":"318619600202410","email":"domian.irina.1989@mail.ru","banking":"р/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Теркин Валерий Владимирович\nСобственник: Тёркин Валерий\nИНН 614301274189, ОГРНИП 318619600202410\nАдрес: г. Ростов-на-Дону, ул. Зорге 11\nТелефон: +7-905-428-76-50\nПочта: domian.irina.1989@mail.ru\n\nр/с 40802810752090046727 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602"},
+      {"id":51,"excelOrder":43,"name":"Домиан Белая Калитва","address":"г. Белая Калитва, ул. Калинина 2","phone":"+7-989-515-00-06","owner":"Титовский Роман","legalName":"ИП Титовский Роман Станиславович","inn":"614211438308","ogrnip":"314619222600031","email":"domian.bk@mail.ru","banking":"р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Титовский Роман Станиславович\nСобственник: Титовский Роман\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Белая Калитва, ул. Калинина 2\nТелефон: +7-989-515-00-06\nПочта: domian.bk@mail.ru\n\nр/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602"},
+      {"id":52,"excelOrder":44,"name":"Домиан Каменск-Шахтинский","address":"г. Каменск-Шахтинский, ул. Ворошилова 13","phone":"+7-900-555-00-06","owner":"Титовский Роман","legalName":"ИП Титовский Роман Станиславович","inn":"614211438308","ogrnip":"314619222600031","email":"domian.bk@mail.ru","banking":"р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Титовский Роман Станиславович\nСобственник: Титовский Роман\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Каменск-Шахтинский, ул. Ворошилова 13\nТелефон: +7-900-555-00-06\nПочта: domian.bk@mail.ru\n\nр/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602"},
+      {"id":53,"excelOrder":45,"name":"Домиан Миллерово","address":"г. Миллерово, ул. Российская 59","phone":"+7-989-525-00-06","owner":"Титовский Роман","legalName":"ИП Титовский Роман Станиславович","inn":"614211438308","ogrnip":"314619222600031","email":"domian.bk@mail.ru","banking":"р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Титовский Роман Станиславович\nСобственник: Титовский Роман\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Миллерово, ул. Российская 59\nТелефон: +7-989-525-00-06\nПочта: domian.bk@mail.ru\n\nр/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602"},
+      {"id":54,"excelOrder":46,"name":"Шахты Результат+","address":"г. Шахты, ул. Шевченко 125А","phone":"+7-989-515-00-06","owner":"Титовский Роман","legalName":"ИП Титовский Роман Станиславович","inn":"614211438308","ogrnip":"314619222600031","email":"domian.bk@mail.ru","banking":"р/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Титовский Роман Станиславович\nСобственник: Титовский Роман\nИНН 614211438308, ОГРНИП 314619222600031\nАдрес: г. Шахты, ул. Шевченко 125А\nТелефон: +7-989-515-00-06\nПочта: domian.bk@mail.ru\n\nр/с 40802810852090008487 Юго-Западный банк ПАО Сбербанк г. Белая Калитва к/с 30101810600000000602 БИК 046015602"},
+      {"id":79,"excelOrder":47,"name":"Домиан Донецк","address":"г. Донецк, ул. Ленина 9","phone":"+7-989-515-00-06","owner":"Титовский Роман","legalName":"","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"Собственник: Титовский Роман\nАдрес: г. Донецк, ул. Ленина 9\nТелефон: +7-989-515-00-06"},
+      {"id":55,"excelOrder":48,"name":"Домиан Стачки","address":"г. Ростов-на-Дону, пр. Стачки 210","phone":"+7-903-402-04-38","owner":"Андреева Наталья","legalName":"ИП Андреева Наталья Васильевна","inn":"614210181628","ogrnip":"325619600263545","email":"s.n.uwarow@mail.ru","banking":"40802810000810149808 ВТБ","fullRequisites":"ИП Андреева Наталья Васильевна\nСобственник: Андреева Наталья\nИНН 614210181628, ОГРНИП 325619600263545\nАдрес: г. Ростов-на-Дону, пр. Стачки 210\nТелефон: +7-903-402-04-38\nПочта: s.n.uwarow@mail.ru\n\n40802810000810149808 ВТБ"},
+      {"id":56,"excelOrder":49,"name":"Домиан Первые Соловушки","address":"г. Ростов-на-Дону, ул. Вятская 57","phone":"+7-918-558-73-72","owner":"Червоный Валерий","legalName":"ИП Червоная Елена Алексеевна","inn":"220909657200","ogrnip":"325619600087860","email":"elena.chervonaja@bk.ru","banking":"р/с 40802810352740004930, Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону, к/с 30101810600000000602, БИК 046015602","fullRequisites":"ИП Червоная Елена Алексеевна\nСобственник: Червоный Валерий\nИНН 220909657200, ОГРНИП 325619600087860\nАдрес: г. Ростов-на-Дону, ул. Вятская 57\nТелефон: +7-918-558-73-72\nПочта: elena.chervonaja@bk.ru\n\nр/с 40802810352740004930, Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону, к/с 30101810600000000602, БИК 046015602"},
+      {"id":58,"excelOrder":50,"name":"Домиан Кристалл","address":"г. Ростов-на-Дону, ЖК Екатерининский, ул. Магнитогорская 1а","phone":"+7-928-138-66-30","owner":"Чумакова Лариса","legalName":"ИП Чумакова Лариса Геннадиевна","inn":"615511722600","ogrnip":"324619600085626","email":"domian_kristall@mai.ru","banking":"р/с 40802810852090424401 в Юго-Западном банке ПАО Сбербанк г. Ростове-на-Дону, БИК 046015602, к/с 30101810600000000602","fullRequisites":"ИП Чумакова Лариса Геннадиевна\nСобственник: Чумакова Лариса\nИНН 615511722600, ОГРНИП 324619600085626\nАдрес: г. Ростов-на-Дону, ЖК Екатерининский, ул. Магнитогорская 1а\nТелефон: +7-928-138-66-30\nПочта: domian_kristall@mai.ru\n\nр/с 40802810852090424401 в Юго-Западном банке ПАО Сбербанк г. Ростове-на-Дону, БИК 046015602, к/с 30101810600000000602"},
+      {"id":59,"excelOrder":51,"name":"Западный 5","address":"г. Ростов-на-Дону, ул. Зорге 56","phone":"+7-928-775-54-43","owner":"Чуносов Михаил","legalName":"ИП Чуносов Михаил Сергеевич","inn":"616117980098","ogrnip":"31861960005831","email":"mike.rostov@mail.ru","banking":"р/с 40802810352090087115 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК к/с 30101810600000000602, БИК 046015602","fullRequisites":"ИП Чуносов Михаил Сергеевич\nСобственник: Чуносов Михаил\nИНН 616117980098, ОГРНИП 31861960005831\nАдрес: г. Ростов-на-Дону, ул. Зорге 56\nТелефон: +7-928-775-54-43\nПочта: mike.rostov@mail.ru\n\nр/с 40802810352090087115 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК к/с 30101810600000000602, БИК 046015602"},
+      {"id":60,"excelOrder":52,"name":"Горизонт","address":"г. Ростов-на-Дону, ул. Ларина 45, стр. 2","phone":"+7-950-868-10-00","owner":"Чуприна Екатерина","legalName":"ИП Чуприна Екатерина Викторовна","inn":"616113019969","ogrnip":"319619600017695","email":"domain.gorizont@ya.ru","banking":"р/с 40802810600000981881 АО Тбанк, к/с30101810145250000974, БИК 044525974","fullRequisites":"ИП Чуприна Екатерина Викторовна\nСобственник: Чуприна Екатерина\nИНН 616113019969, ОГРНИП 319619600017695\nАдрес: г. Ростов-на-Дону, ул. Ларина 45, стр. 2\nТелефон: +7-950-868-10-00\nПочта: domain.gorizont@ya.ru\n\nр/с 40802810600000981881 АО Тбанк, к/с30101810145250000974, БИК 044525974"},
+      {"id":61,"excelOrder":53,"name":"Домиан Таганрог","address":"г. Таганрог, ул. Социалистическая 2, офис 310","phone":"+7-938-143-33-01","owner":"Шаповалов Сергей","legalName":"ИП Шаповалов Сергей Олегович","inn":"615424204391","ogrnip":"324619600160280","email":"","banking":"","fullRequisites":"ИП Шаповалов Сергей Олегович\nСобственник: Шаповалов Сергей\nИНН 615424204391, ОГРНИП 324619600160280\nАдрес: г. Таганрог, ул. Социалистическая 2, офис 310\nТелефон: +7-938-143-33-01"},
+      {"id":62,"excelOrder":54,"name":"Западный 11","address":"г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж","phone":"+7-988-580-14-73","owner":"Шиянова Елена","legalName":"ИП Тарчукова Диана Александровна","inn":"616800117202","ogrnip":"3257746007070460","email":"","banking":"р/с 40802810220000849788 Банк Точка г. Москва к/с 30101810745374525104 БИК 044525104","fullRequisites":"ИП Тарчукова Диана Александровна\nСобственник: Шиянова Елена\nИНН 616800117202, ОГРНИП 3257746007070460\nАдрес: г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж\nТелефон: +7-988-580-14-73\n\nр/с 40802810220000849788 Банк Точка г. Москва к/с 30101810745374525104 БИК 044525104"},
+      {"id":63,"excelOrder":55,"name":"Полёт","address":"г. Ростов-на-Дону, ул. Берберовская 24","phone":"+7-918-521-51-52","owner":"Юдин Александр","legalName":"ИП Ильин Евгений Иванович","inn":"616600503507","ogrnip":"320619600092676","email":"","banking":"р/с 40802810852090058194 к/с 30101810600000000602 БИК 046015602 ЮГО-ЗАПАДНЫЙ БАНКК ПАО СБЕРБАНК","fullRequisites":"ИП Ильин Евгений Иванович\nСобственник: Юдин Александр\nИНН 616600503507, ОГРНИП 320619600092676\nАдрес: г. Ростов-на-Дону, ул. Берберовская 24\nТелефон: +7-918-521-51-52\n\nр/с 40802810852090058194 к/с 30101810600000000602 БИК 046015602 ЮГО-ЗАПАДНЫЙ БАНКК ПАО СБЕРБАНК"},
+      {"id":64,"excelOrder":56,"name":"Восточный","address":"г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5","phone":"+7-908-180-42-13","owner":"Яцык Екатерина","legalName":"Ип Яцык Екатерина Валентиновна","inn":"616710033607","ogrnip":"316619600234309","email":"Strochka_rnd@mail.ru","banking":"Р/с 40802810052090451025\nК/с 30101810600000000602\nБик 046015602\nПао Сбербанк","fullRequisites":"Ип Яцык Екатерина Валентиновна\nСобственник: Яцык Екатерина\nИНН 616710033607, ОГРНИП 316619600234309\nАдрес: г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5\nТелефон: +7-908-180-42-13\nПочта: Strochka_rnd@mail.ru\n\nР/с 40802810052090451025\nК/с 30101810600000000602\nБик 046015602\nПао Сбербанк"},
+      {"id":65,"excelOrder":57,"name":"Аллея Домиан","address":"г. Ростов-на-Дону, ул. Маршала Жукова 16/6","phone":"+7-952-607-92-22","owner":"Лизунова Татьяна Сергеевна","legalName":"ИП Лизунова Татьяна Сергеевна","inn":"232704657746","ogrnip":"425619601175600","email":"","banking":"рс 40802810026140006566 АО Альфа-Банк БИК 046015207 К.С 30101810500000000207","fullRequisites":"ИП Лизунова Татьяна Сергеевна\nСобственник: Лизунова Татьяна Сергеевна\nИНН 232704657746, ОГРНИП 425619601175600\nАдрес: г. Ростов-на-Дону, ул. Маршала Жукова 16/6\nТелефон: +7-952-607-92-22\n\nрс 40802810026140006566 АО Альфа-Банк БИК 046015207 К.С 30101810500000000207"},
+      {"id":66,"excelOrder":58,"name":"Домиан Кореновск","address":"г. Кореновск, ул. Красная 23","phone":"+7-918-364-45-00","owner":"ГЛОБА ОКСАНА НИКОЛАЕВНА","legalName":"ИП Глоба Оксана Николаевна","inn":"233504793704","ogrnip":"324237500271058","email":"","banking":"РС 40802810930000475689 КРАСНОДАРСКОЕ ОТДЕЛЕНИЕ N8619 ПАО СБЕРБАНК БИК: 040349602 Корсчёт: 30101810100000000602","fullRequisites":"ИП Глоба Оксана Николаевна\nСобственник: ГЛОБА ОКСАНА НИКОЛАЕВНА\nИНН 233504793704, ОГРНИП 324237500271058\nАдрес: г. Кореновск, ул. Красная 23\nТелефон: +7-918-364-45-00\n\nРС 40802810930000475689 КРАСНОДАРСКОЕ ОТДЕЛЕНИЕ N8619 ПАО СБЕРБАНК БИК: 040349602 Корсчёт: 30101810100000000602"},
+      {"id":67,"excelOrder":59,"name":"Домиан Феникс","address":"г. Ростов-на-Дону, ул. Троллейбусная 24/2В, 6 этаж, каб. 617","phone":"+7-988-990-89-13","owner":"Данилов Сергей Константинович","legalName":"ИП Данилов Сергей Константинович","inn":"325619600101034","ogrnip":"325619600101034","email":"","banking":"РС 40802810600008234242 Название банка: АО «ТБанк»\nБИК: 044525974\nКорреспондентский счёт: 30101810145250000974","fullRequisites":"ИП Данилов Сергей Константинович\nСобственник: Данилов Сергей Константинович\nИНН 325619600101034, ОГРНИП 325619600101034\nАдрес: г. Ростов-на-Дону, ул. Троллейбусная 24/2В, 6 этаж, каб. 617\nТелефон: +7-988-990-89-13\n\nРС 40802810600008234242 Название банка: АО «ТБанк»\nБИК: 044525974\nКорреспондентский счёт: 30101810145250000974"},
+      {"id":68,"excelOrder":60,"name":"Комфорт","address":"г. Ростов-на-Дону, ул. Извилистая 17а","phone":"+7-961-321-90-69","owner":"ДИОНИСОВ ЕВГЕНИЙ АЛЕКСАНДРОВИЧ","legalName":"ИП ДИОНИСОВ ЕВГЕНИЙ АЛЕКСАНДРОВИЧ","inn":"616803377142","ogrnip":"321619600246631","email":"dionisoffrealty@yandex.ru","banking":"АО «ТБанк»БИК банка Расчетный счет\n40802810900002948522\n044525974 Корреспондентский счет банка\n30101810145250000974","fullRequisites":"ИП ДИОНИСОВ ЕВГЕНИЙ АЛЕКСАНДРОВИЧ\nСобственник: ДИОНИСОВ ЕВГЕНИЙ АЛЕКСАНДРОВИЧ\nИНН 616803377142, ОГРНИП 321619600246631\nАдрес: г. Ростов-на-Дону, ул. Извилистая 17а\nТелефон: +7-961-321-90-69\nПочта: dionisoffrealty@yandex.ru\n\nАО «ТБанк»БИК банка Расчетный счет\n40802810900002948522\n044525974 Корреспондентский счет банка\n30101810145250000974"},
+      {"id":69,"excelOrder":61,"name":"Лайф","address":"г. Ростов-на-Дону, ул. Армянская 10","phone":"+7-909-404-34-17","owner":"Геворкян Овсеп Мкртичович","legalName":"ИП Геворкян Овсеп","inn":"615527945144","ogrnip":"325619600215553","email":"","banking":"р/с 40802810300008727703 к/с 30101810145250000974 БИК 044525974 АО ТБанк","fullRequisites":"ИП Геворкян Овсеп\nСобственник: Геворкян Овсеп Мкртичович\nИНН 615527945144, ОГРНИП 325619600215553\nАдрес: г. Ростов-на-Дону, ул. Армянская 10\nТелефон: +7-909-404-34-17\n\nр/с 40802810300008727703 к/с 30101810145250000974 БИК 044525974 АО ТБанк"},
+      {"id":80,"excelOrder":62,"name":"Статус","address":"г. Ростов-на-Дону, пр. Коммунистический 66/1","phone":"+7-908-507-98-89","owner":"Кравченко Лариса","legalName":"ИП Демченко Марина Анатольевна","inn":"616801843849","ogrnip":"","email":"","banking":"р/с 40802810026270007215 к/с 30101810500000000207 БИК 046015207 ФИЛИАЛ \"РОСТОВСКИЙ \" АО \"Альфа Банк\" г. Ростов-на-Дону","fullRequisites":"ИП Демченко Марина Анатольевна\nСобственник: Кравченко Лариса\nИНН 616801843849\nАдрес: г. Ростов-на-Дону, пр. Коммунистический 66/1\nТелефон: +7-908-507-98-89\n\nр/с 40802810026270007215 к/с 30101810500000000207 БИК 046015207 ФИЛИАЛ \"РОСТОВСКИЙ \" АО \"Альфа Банк\" г. Ростов-на-Дону"},
+      {"id":81,"excelOrder":63,"name":"Сокол","address":"г. Ростов-на-Дону, ул. Спортаковская 26/61","phone":"+7-908-177-92-65","owner":"Хлюстина Оксана","legalName":"","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"Собственник: Хлюстина Оксана\nАдрес: г. Ростов-на-Дону, ул. Спортаковская 26/61\nТелефон: +7-908-177-92-65"},
+      {"id":4,"name":"Домиан Эстет","address":"г. Ростов-на-Дону, ул. Толмачева 50","phone":"+7-928-619-10-00","owner":"Бордиенко Елена Николаевна","inn":"612704481466","ogrnip":"324619600074944","email":"Rbordienko@mail.ru","banking":"р/с 408028108260070007343 филиал «Ростовский» АО Альфа-Банк г. Ростов-на-Дону к/с 30101810500000000207 БИК 044525593","fullRequisites":"ИП Бордиенко Елена Николаевна\n\nИНН 612704481466, ОГРНИП 324619600074944\nАдрес: г. Ростов-на-Дону, ул. Толмачева 50\nр/с 408028108260070007343\nФилиал «Ростовский» АО \"Альфа-Банк\"\nКор. счёт: 30101810500000000207\nБИК 044525593","excelOrder":null,"legalName":""},
+      {"id":13,"name":"Домиан Мой Дом","address":"г. Ростов-на-Дону, ул. 40 летия победы 63/17с8","phone":"+7-928-177-98-93","owner":"Дронова Алёна Викторовна","inn":"614702345824","ogrnip":"323619600260572","email":"lena.dronova.1974@mail.ru","banking":"р/с 40802810752090083285 Юго-Западный банк ПАО Сбербанк к/с30101810600000000602","fullRequisites":"ИП Дронова Алёна Викторовна\n\nИНН 614702345824, ОГРНИП 323619600260572\nАдрес: г. Ростов-на-Дону, ул. 40 летия победы 63/17с8\nр/с 40802810752090083285\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":14,"name":"Домиан Уютный Дом","address":"г. Ростов-на-Дону, ул. Мечникова 114/134, офис 210","phone":"+7-909-432-49-99","owner":"Дудка Павел Сергеевич","inn":"611301324959","ogrnip":"321619600141624","email":"domian.na.dony@gmail.com","banking":"р/с 408028102520900090820 Юго-Западный банк ПАО Сбербанк г. Ростов на Дону БИК 046015602","fullRequisites":"ИП Дудка Павел Сергеевич\n\nИНН 611301324959, ОГРНИП 321619600141624\nАдрес: г. Ростов-на-Дону, ул. Мечникова 114/134, офис 210\nр/с 408028102520900090820\nЮго-Западный банк ПАО Сбербанк\nБИК 046015602\nКор. счёт: 30101810600000000602","excelOrder":null,"legalName":""},
+      {"id":30,"name":"Домиан ЛегеАртис","address":"пос. Верхнетемерницкий, ул. Обсерваторная 104/1, офис 15","phone":"+7-938-147-96-60","owner":"Приходченко Ирина Леонидовна","inn":"613203719423","ogrnip":"317619600161221","email":"m89381479660@yandex.ru","banking":"Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411","fullRequisites":"ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: пос. Верхнетемерницкий, ул. Обсерваторная 104/1, офис 15\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411","excelOrder":null,"legalName":""},
+      {"id":31,"name":"Ленинаван","address":"г. Ростов-на-Дону, ул. Шаумяна 1е","phone":"+7-938-147-96-60","owner":"Приходченко Ирина Леонидовна","inn":"613203719423","ogrnip":"317619600161221","email":"m89381479660@yandex.ru","banking":"Расчетный счет: 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nк/с 30101810145250000411  БИК 044525411","fullRequisites":"ИП Приходченко Ирина Леонидовна\n\nИНН 613203719423, ОГРНИП 317619600161221\nАдрес: г. Ростов-на-Дону, ул. Шаумяна 1е\nр/с 40802810227050000386\nФилиал «Центральный» Банка ВТБ (ПАО)\nКор. счёт: 30101810145250000411\nБИК 044525411","excelOrder":null,"legalName":""},
+      {"id":34,"name":"Левенцовский 1","address":"г. Ростов-на-Дону, ул. Ерёменко 99","phone":"+7-951-526-98-48","owner":"Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"р/с 40802810752090008590 Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону к/с 30101810600000000602 БИК 046015602","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Ерёменко 99\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":42,"name":"Династия","address":"г. Ростов-на-Дону","phone":"+7-918-554-38-89","owner":"Пирогова Екатерина Ивановна","inn":"616704685562","ogrnip":"32361900021446","email":"Katrine.pirogova@yandex.ru","banking":"р/с 40802810652090004416 в Юго-Западный банк ПАО Сбербанк г. Ростов-на-Дону,\nк/с 30101810600000000602, БИК 046015602","fullRequisites":"ИП Пирогова Екатерина Ивановна\n\nИНН 616704685562, ОГРНИП 32361900021446\nАдрес: г. Ростов-на-Дону\nр/с 40802810652090004416\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":45,"name":"Первомайский","address":"г. Ростов-на-Дону, ул. Лелюшенко 1","phone":"+7-908-506-54-51","owner":"Скворцова Елена Юрьевна","inn":"612401877081","ogrnip":"318619600086071","email":"komaroffilia@yandex.ru","banking":"Расчётный счёт: 40802810252090018378\nБанк: ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК банка: 046015602\nКорсчёт: 30101810600000000602\nИНН банка: 7707083893\nКПП банка: 616143002","fullRequisites":"ИП Скворцова Елена Юрьевна\n\nИНН 612401877081, ОГРНИП 318619600086071\nАдрес: г. Ростов-на-Дону, ул. Лелюшенко 1\nр/с 40802810252090018378\nЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК\nБИК: 046015602\nКор. счёт: 30101810600000000602\nИНН банка: 7707083893\nКПП банка: 616143002","excelOrder":null,"legalName":""},
+      {"id":57,"name":"Домиан Миллениум","address":"г. Ростов-на-Дону, ул. Семашко 114, офис 208","phone":"+7-908-171-50-32","owner":"Черевченко Кирилл","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"Адрес: г. Ростов-на-Дону, ул. Семашко 114, офис 208","excelOrder":null,"legalName":""},
+      {"id":70,"name":"Красный Верес","address":"г. Ростов-на-Дону, ул. Вересаева 101/3, стр. 2","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Вересаева 101/3, стр. 2\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":71,"name":"Центр 1","address":"г. Ростов-на-Дону, ул. Красноармейская 121, 2 этаж","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121, 2 этаж\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":72,"name":"Южный","address":"г. Ростов-на-Дону, ул. Красноармейская 121","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Красноармейская 121\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":73,"name":"Северный 1","address":"г. Ростов-на-Дону, пр. Космонавтов 32в, 3 этаж","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, пр. Космонавтов 32в, 3 этаж\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":74,"name":"Октябрьский","address":"г. Ростов-на-Дону, ул. Ленина 46","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Ленина 46\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":75,"name":"Левенцовский 2","address":"г. Ростов-на-Дону, ул. Еременко 100/70","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, ул. Еременко 100/70\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":76,"name":"Западный 1","address":"г. Ростов-на-Дону, пр. Коммунистический 25","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Ростов-на-Дону, пр. Коммунистический 25\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":77,"name":"Краснодар 1","address":"г. Краснодар, Плановый проезд 5","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Краснодар, Плановый проезд 5\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""},
+      {"id":78,"name":"Сальск-Пушкинский","address":"г. Сальск, ул. Пушкина 32","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Сальск, ул. Пушкина 32\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""}
     ];
 
-    // Неактивные офисы по вашему списку
-    const inactiveIds = [4, 13, 36, 42, 45, 57];
-    
-    // Определяем офисы Павла Орлова (включая уже существующие)
-    const orlovOfficeIds = [34, 62, 70, 71, 72, 73, 74, 75, 76, 77, 78];
+    // В архиве: отсутствующие в актуальном Excel и офис с пометкой «Неактивен».
+    const inactiveIds = [4, 13, 14, 30, 31, 34, 35, 42, 45, 57, 70, 71, 72, 73, 74, 75, 76, 77, 78];
+    const inactiveIdSet = new Set(inactiveIds);
 
-    // Фильтруем офисы по категориям
-    const activeOffices = offices.filter(o => !inactiveIds.includes(o.id) && !orlovOfficeIds.includes(o.id));
-    const inactiveOffices = offices.filter(o => inactiveIds.includes(o.id));
-    const filteredOrlovOffices = offices.filter(o => orlovOfficeIds.includes(o.id));
+    const activeOffices = offices
+      .filter(office => !inactiveIdSet.has(office.id))
+      .sort((a, b) => (a.excelOrder ?? 999) - (b.excelOrder ?? 999));
 
-    function renderTable(data, tableBodyId, isInactive = false, isOrlov = false) {
-      const tbody = document.getElementById(tableBodyId).querySelector('tbody');
-      tbody.innerHTML = '';
-      data.forEach(item => {
-        const row = tbody.insertRow();
-        if (isInactive) row.classList.add('inactive');
-        if (isOrlov) row.classList.add('orlov');
-        row.innerHTML = `
-          <td>${item.id}</td>
-          <td>${item.name || '—'}</td>
-          <td>${item.address || '—'}</td>
-          <td>${item.phone || '—'}</td>
-          <td class="full-name">${item.owner || '—'}</td>
-          <td>${item.inn || '—'}</td>
-          <td>${item.ogrnip || '—'}</td>
-          <td><button class="details-btn" data-id="${item.id}">Подробнее</button></td>
-        `;
-        row.dataset.search = `${item.id} ${item.name} ${item.address} ${item.phone} ${item.owner} ${item.inn} ${item.ogrnip} ${item.banking}`.toLowerCase();
+    const inactiveOffices = offices
+      .filter(office => inactiveIdSet.has(office.id))
+      .sort((a, b) => {
+        if (a.excelOrder && !b.excelOrder) return -1;
+        if (!a.excelOrder && b.excelOrder) return 1;
+        return a.name.localeCompare(b.name, 'ru');
       });
-      
-      // Обновляем счетчик
-      const countElement = document.getElementById(tableBodyId.replace('table', 'count'));
-      if (countElement) {
-        countElement.textContent = data.length;
-      }
+
+    const searchInput = document.getElementById('search');
+    const clearSearchButton = document.getElementById('clearSearch');
+    const searchStatus = document.getElementById('searchStatus');
+    const modal = document.getElementById('detailsModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalAddress = document.getElementById('modalAddress');
+    const modalNote = document.getElementById('modalNote');
+    const modalContent = document.getElementById('modalContent');
+    const copyButton = document.getElementById('copyBtn');
+    const closeButton = document.querySelector('.close');
+    let currentOffice = null;
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
     }
 
-    // Рендерим все три таблицы
-    renderTable(activeOffices, 'active-table', false);
-    renderTable(filteredOrlovOffices, 'orlov-table', false, true);
-    renderTable(inactiveOffices, 'inactive-table', true);
+    function telHref(phone) {
+      const digits = String(phone ?? '').replace(/\D/g, '');
+      return digits ? `tel:+${digits.startsWith('8') ? `7${digits.slice(1)}` : digits}` : '';
+    }
 
-    // Поиск
-    document.getElementById('search').addEventListener('input', function () {
-      const query = this.value.toLowerCase();
-      document.querySelectorAll('tbody tr').forEach(row => {
-        const text = row.dataset.search;
-        row.style.display = text.includes(query) ? '' : 'none';
+    function archiveReason(office) {
+      return office.excelOrder
+        ? 'Неактивен'
+        : 'Нет в актуальном списке';
+    }
+
+    function renderTable(data, tableId, isInactive = false) {
+      const table = document.getElementById(tableId);
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        const row = tbody.insertRow();
+        const displayNumber = item.excelOrder ?? item.id;
+        const isPending = /^временно без офиса$/iu.test(item.address);
+        const meta = isInactive ? archiveReason(item) : '';
+        const phone = item.phone
+          ? `<a class="phone-link" href="${escapeHtml(telHref(item.phone))}">${escapeHtml(item.phone)}</a>`
+          : '—';
+        const address = isPending
+          ? `<span class="address-pending">${escapeHtml(item.address)}</span>`
+          : escapeHtml(item.address || '—');
+
+        if (isInactive) row.classList.add('inactive');
+        row.innerHTML = `
+          <td data-label="№"><span class="index-pill">${escapeHtml(displayNumber)}</span></td>
+          <td data-label="Название">
+            <span class="office-name">${escapeHtml(item.name || '—')}</span>
+            ${meta ? `<span class="office-meta">${escapeHtml(meta)}</span>` : ''}
+          </td>
+          <td class="address" data-label="Адрес">${address}</td>
+          <td data-label="Телефон">${phone}</td>
+          <td class="full-name" data-label="Собственник">${escapeHtml(item.owner || '—')}</td>
+          <td class="mono" data-label="ИНН">${escapeHtml(item.inn || '—')}</td>
+          <td class="mono" data-label="ОГРНИП">${escapeHtml(item.ogrnip || '—')}</td>
+          <td data-label="Реквизиты"><button class="details-btn" type="button" data-id="${item.id}">Открыть</button></td>
+        `;
+        row.dataset.search = [
+          item.id,
+          item.excelOrder,
+          item.name,
+          item.address,
+          item.phone,
+          item.owner,
+          item.legalName,
+          item.inn,
+          item.ogrnip,
+          item.email,
+          item.banking,
+        ].join(' ').toLocaleLowerCase('ru');
       });
-    });
 
-    // Обработчик для кнопок "Подробнее"
-    document.addEventListener('click', function(e) {
-      if (e.target.classList.contains('details-btn')) {
-        const officeId = parseInt(e.target.dataset.id);
-        const office = offices.find(o => o.id === officeId);
-        
-        if (office) {
-          document.getElementById('modalTitle').textContent = office.name;
-          document.getElementById('modalContent').textContent = office.fullRequisites;
-          document.getElementById('detailsModal').style.display = 'block';
-        }
+      const countElement = document.getElementById(tableId.replace('table', 'count'));
+      countElement.textContent = data.length;
+    }
+
+    function updateSearch() {
+      const query = searchInput.value.trim().toLocaleLowerCase('ru');
+      let visibleTotal = 0;
+
+      document.querySelectorAll('.section').forEach(section => {
+        const rows = [...section.querySelectorAll('tbody tr')];
+        let visibleInSection = 0;
+
+        rows.forEach(row => {
+          const visible = !query || row.dataset.search.includes(query);
+          row.hidden = !visible;
+          if (visible) visibleInSection += 1;
+        });
+
+        visibleTotal += visibleInSection;
+        section.querySelector('.empty-state').classList.toggle('is-visible', visibleInSection === 0);
+        section.querySelector('table').hidden = visibleInSection === 0;
+
+        const sectionKey = section.dataset.section;
+        const sourceLength = sectionKey === 'active' ? activeOffices.length : inactiveOffices.length;
+        document.getElementById(`${sectionKey}-count`).textContent =
+          query ? `${visibleInSection} / ${sourceLength}` : sourceLength;
+      });
+
+      clearSearchButton.classList.toggle('is-visible', Boolean(query));
+      searchStatus.textContent = query
+        ? `Найдено: ${visibleTotal} из ${offices.length}`
+        : `${activeOffices.length} активных · ${inactiveOffices.length} в архиве`;
+    }
+
+    function openModal(office) {
+      currentOffice = office;
+      modalTitle.textContent = office.name;
+      modalAddress.textContent = office.address || 'Адрес не указан';
+      modalNote.textContent = office.excelOrder
+        ? 'Реквизиты проверены и актуальны'
+        : 'Архивная карточка: офиса нет в актуальном списке';
+      modalContent.textContent = office.fullRequisites || 'Реквизиты не указаны.';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      closeButton.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      currentOffice = null;
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
       }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+
+    renderTable(activeOffices, 'active-table');
+    renderTable(inactiveOffices, 'inactive-table', true);
+    document.getElementById('network-count').textContent = offices.length;
+    document.getElementById('active-total').textContent = activeOffices.length;
+    document.getElementById('inactive-total').textContent = inactiveOffices.length;
+    updateSearch();
+
+    searchInput.addEventListener('input', updateSearch);
+    clearSearchButton.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.focus();
+      updateSearch();
     });
 
-    // Обработчик для кнопки "Копировать"
-    document.getElementById('copyBtn').addEventListener('click', function() {
-      const text = document.getElementById('modalContent').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const originalText = this.textContent;
-        this.textContent = 'Скопировано!';
-        setTimeout(() => {
-          this.textContent = originalText;
-        }, 2000);
-      });
+    document.addEventListener('click', event => {
+      const detailsButton = event.target.closest('.details-btn');
+      if (!detailsButton) return;
+      const office = offices.find(item => item.id === Number(detailsButton.dataset.id));
+      if (office) openModal(office);
     });
 
-    // Обработчик для закрытия модального окна
-    document.querySelector('.close').addEventListener('click', function() {
-      document.getElementById('detailsModal').style.display = 'none';
+    copyButton.addEventListener('click', async () => {
+      if (!currentOffice) return;
+      const originalText = copyButton.textContent;
+      try {
+        await copyText(currentOffice.fullRequisites || modalContent.textContent);
+        copyButton.textContent = 'Скопировано';
+      } catch {
+        copyButton.textContent = 'Не удалось скопировать';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = originalText;
+      }, 1800);
     });
 
-    // Закрытие модального окна при клике вне его области
-    window.addEventListener('click', function(e) {
-      const modal = document.getElementById('detailsModal');
-      if (e.target === modal) {
-        modal.style.display = 'none';
+    closeButton.addEventListener('click', closeModal);
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
       }
     });
   </script>
