@@ -281,9 +281,78 @@
       text-align: right;
     }
 
+    .quick-nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 24px 26px;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 58px;
+      padding: 12px 14px;
+      color: #344054;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 22px rgba(28,42,67,0.06);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .quick-link:hover {
+      border-color: #cdd6e4;
+      box-shadow: 0 12px 28px rgba(28,42,67,0.10);
+      transform: translateY(-2px);
+    }
+
+    .quick-link::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .quick-link-franchise::before {
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(22,135,103,0.10);
+    }
+
+    .quick-link-orlov::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(47,111,237,0.10);
+    }
+
+    .quick-link-archive::before {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(192,75,86,0.09);
+    }
+
+    .quick-link-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 30px;
+      height: 30px;
+      margin-left: auto;
+      padding: 0 8px;
+      color: #667085;
+      border-radius: 9px;
+      background: #f1f3f6;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
     .section {
       margin-top: 22px;
       overflow: hidden;
+      scroll-margin-top: 24px;
       border: 1px solid var(--line);
       border-radius: 22px;
       background: var(--paper);
@@ -391,8 +460,9 @@
     }
 
     .table-container {
-      max-height: 68vh;
-      overflow: auto;
+      max-height: none;
+      overflow-x: auto;
+      overflow-y: hidden;
       scrollbar-color: #c9d0da transparent;
       scrollbar-width: thin;
     }
@@ -747,6 +817,11 @@
         margin-inline: 12px;
       }
 
+      .quick-nav {
+        grid-template-columns: 1fr;
+        margin-inline: 12px;
+      }
+
       .search-status {
         min-width: 0;
         text-align: left;
@@ -925,13 +1000,28 @@
         <div class="search-status" id="searchStatus" aria-live="polite"></div>
       </section>
 
-      <section class="section section-active" data-section="active">
+      <nav class="quick-nav" aria-label="Быстрый переход к разделам">
+        <a class="quick-link quick-link-franchise" href="#franchise-offices">
+          <span>Франшизные офисы</span>
+          <span class="quick-link-count" id="nav-active-count"></span>
+        </a>
+        <a class="quick-link quick-link-orlov" href="#orlov-offices">
+          <span>Офисы Павла Орлова</span>
+          <span class="quick-link-count" id="nav-orlov-count"></span>
+        </a>
+        <a class="quick-link quick-link-archive" href="#archive-offices">
+          <span>Архив офисов</span>
+          <span class="quick-link-count" id="nav-inactive-count"></span>
+        </a>
+      </nav>
+
+      <section class="section section-active" id="franchise-offices" data-section="active">
         <div class="section-head">
           <div class="section-heading">
             <span class="section-icon" aria-hidden="true"></span>
             <div>
-              <h2>Активные офисы</h2>
-              <p class="section-description">Актуальные рабочие офисы сети</p>
+              <h2>Франшизные офисы</h2>
+              <p class="section-description">Актуальные офисы франшизной сети</p>
             </div>
           </div>
           <span class="badge" id="active-count"></span>
@@ -956,7 +1046,7 @@
         </div>
       </section>
 
-      <section class="section section-orlov" data-section="orlov">
+      <section class="section section-orlov" id="orlov-offices" data-section="orlov">
         <div class="section-head">
           <div class="section-heading">
             <span class="section-icon" aria-hidden="true"></span>
@@ -987,7 +1077,7 @@
         </div>
       </section>
 
-      <section class="section section-inactive" data-section="inactive">
+      <section class="section section-inactive" id="archive-offices" data-section="inactive">
         <div class="section-head">
           <div class="section-heading">
             <span class="section-icon" aria-hidden="true"></span>
@@ -1317,6 +1407,9 @@
     document.getElementById('network-count').textContent = offices.length;
     document.getElementById('active-total').textContent = activeOffices.length + orlovOffices.length;
     document.getElementById('inactive-total').textContent = inactiveOffices.length;
+    document.getElementById('nav-active-count').textContent = activeOffices.length;
+    document.getElementById('nav-orlov-count').textContent = orlovOffices.length;
+    document.getElementById('nav-inactive-count').textContent = inactiveOffices.length;
     updateSearch();
 
     searchInput.addEventListener('input', updateSearch);
