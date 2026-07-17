@@ -332,6 +332,15 @@
       box-shadow: 0 0 0 5px rgba(22,135,103,0.11);
     }
 
+    .section-orlov .section-icon {
+      background: var(--accent-soft);
+    }
+
+    .section-orlov .section-icon::after {
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(47,111,237,0.11);
+    }
+
     .section-inactive .section-icon {
       background: var(--danger-soft);
     }
@@ -369,6 +378,11 @@
     .section-active .badge {
       color: #0f7258;
       background: var(--success-soft);
+    }
+
+    .section-orlov .badge {
+      color: #225bb7;
+      background: var(--accent-soft);
     }
 
     .section-inactive .badge {
@@ -942,6 +956,37 @@
         </div>
       </section>
 
+      <section class="section section-orlov" data-section="orlov">
+        <div class="section-head">
+          <div class="section-heading">
+            <span class="section-icon" aria-hidden="true"></span>
+            <div>
+              <h2>Офисы Павла Орлова</h2>
+              <p class="section-description">Отдельная группа действующих офисов</p>
+            </div>
+          </div>
+          <span class="badge" id="orlov-count"></span>
+        </div>
+        <div class="table-container">
+          <table id="orlov-table">
+            <thead>
+              <tr>
+                <th style="width: 5%">№</th>
+                <th style="width: 15%">Название</th>
+                <th style="width: 20%">Адрес</th>
+                <th style="width: 11%">Телефон</th>
+                <th style="width: 15%">Собственник</th>
+                <th style="width: 11%">ИНН</th>
+                <th style="width: 12%">ОГРНИП</th>
+                <th style="width: 11%">Реквизиты</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="empty-state">По вашему запросу офисы Павла Орлова не найдены.</div>
+        </div>
+      </section>
+
       <section class="section section-inactive" data-section="inactive">
         <div class="section-head">
           <div class="section-heading">
@@ -1052,7 +1097,7 @@
       {"id":59,"excelOrder":51,"name":"Западный 5","address":"г. Ростов-на-Дону, ул. Зорге 56","phone":"+7-928-775-54-43","owner":"Чуносов Михаил","legalName":"ИП Чуносов Михаил Сергеевич","inn":"616117980098","ogrnip":"31861960005831","email":"mike.rostov@mail.ru","banking":"р/с 40802810352090087115 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК к/с 30101810600000000602, БИК 046015602","fullRequisites":"ИП Чуносов Михаил Сергеевич\nСобственник: Чуносов Михаил\nИНН 616117980098, ОГРНИП 31861960005831\nАдрес: г. Ростов-на-Дону, ул. Зорге 56\nТелефон: +7-928-775-54-43\nПочта: mike.rostov@mail.ru\n\nр/с 40802810352090087115 ЮГО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК к/с 30101810600000000602, БИК 046015602"},
       {"id":60,"excelOrder":52,"name":"Горизонт","address":"г. Ростов-на-Дону, ул. Ларина 45, стр. 2","phone":"+7-950-868-10-00","owner":"Чуприна Екатерина","legalName":"ИП Чуприна Екатерина Викторовна","inn":"616113019969","ogrnip":"319619600017695","email":"domain.gorizont@ya.ru","banking":"р/с 40802810600000981881 АО Тбанк, к/с30101810145250000974, БИК 044525974","fullRequisites":"ИП Чуприна Екатерина Викторовна\nСобственник: Чуприна Екатерина\nИНН 616113019969, ОГРНИП 319619600017695\nАдрес: г. Ростов-на-Дону, ул. Ларина 45, стр. 2\nТелефон: +7-950-868-10-00\nПочта: domain.gorizont@ya.ru\n\nр/с 40802810600000981881 АО Тбанк, к/с30101810145250000974, БИК 044525974"},
       {"id":61,"excelOrder":53,"name":"Домиан Таганрог","address":"г. Таганрог, ул. Социалистическая 2, офис 310","phone":"+7-938-143-33-01","owner":"Шаповалов Сергей","legalName":"ИП Шаповалов Сергей Олегович","inn":"615424204391","ogrnip":"324619600160280","email":"","banking":"","fullRequisites":"ИП Шаповалов Сергей Олегович\nСобственник: Шаповалов Сергей\nИНН 615424204391, ОГРНИП 324619600160280\nАдрес: г. Таганрог, ул. Социалистическая 2, офис 310\nТелефон: +7-938-143-33-01"},
-      {"id":62,"excelOrder":54,"name":"Западный 11","address":"г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж","phone":"+7-988-580-14-73","owner":"Шиянова Елена","legalName":"ИП Тарчукова Диана Александровна","inn":"616800117202","ogrnip":"3257746007070460","email":"","banking":"р/с 40802810220000849788 Банк Точка г. Москва к/с 30101810745374525104 БИК 044525104","fullRequisites":"ИП Тарчукова Диана Александровна\nСобственник: Шиянова Елена\nИНН 616800117202, ОГРНИП 3257746007070460\nАдрес: г. Ростов-на-Дону, ул. Малиновского 3 «б», офис 25, 2 этаж\nТелефон: +7-988-580-14-73\n\nр/с 40802810220000849788 Банк Точка г. Москва к/с 30101810745374525104 БИК 044525104"},
+      {"id":62,"excelOrder":54,"name":"Западный 11","address":"Без адреса","phone":"+7-988-580-14-73","owner":"Шиянова Елена","legalName":"ИП Тарчукова Диана Александровна","legalAddress":"г. Ростов-на-Дону, ул. Городовикова, 34, кв. 236","inn":"616800117202","kpp":"0","ogrnip":"325774600707466","email":"","banking":"р/с 40802810220000849788 Банк ООО \"Банк Точка\"\nк/с 30101810745374525104, БИК 044525104","fullRequisites":"ИП Тарчукова Диана Александровна\nСобственник: Шиянова Елена\nИНН 616800117202, КПП 0, ОГРНИП 325774600707466\nАдрес ИП: г. Ростов-на-Дону, ул. Городовикова, 34, кв. 236\nОфис: без адреса\nТелефон: +7-988-580-14-73\n\nр/с 40802810220000849788 Банк ООО \"Банк Точка\"\nк/с 30101810745374525104, БИК 044525104"},
       {"id":63,"excelOrder":55,"name":"Полёт","address":"г. Ростов-на-Дону, ул. Берберовская 24","phone":"+7-918-521-51-52","owner":"Юдин Александр","legalName":"ИП Ильин Евгений Иванович","inn":"616600503507","ogrnip":"320619600092676","email":"","banking":"р/с 40802810852090058194 к/с 30101810600000000602 БИК 046015602 ЮГО-ЗАПАДНЫЙ БАНКК ПАО СБЕРБАНК","fullRequisites":"ИП Ильин Евгений Иванович\nСобственник: Юдин Александр\nИНН 616600503507, ОГРНИП 320619600092676\nАдрес: г. Ростов-на-Дону, ул. Берберовская 24\nТелефон: +7-918-521-51-52\n\nр/с 40802810852090058194 к/с 30101810600000000602 БИК 046015602 ЮГО-ЗАПАДНЫЙ БАНКК ПАО СБЕРБАНК"},
       {"id":64,"excelOrder":56,"name":"Восточный","address":"г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5","phone":"+7-908-180-42-13","owner":"Яцык Екатерина","legalName":"Ип Яцык Екатерина Валентиновна","inn":"616710033607","ogrnip":"316619600234309","email":"Strochka_rnd@mail.ru","banking":"Р/с 40802810052090451025\nК/с 30101810600000000602\nБик 046015602\nПао Сбербанк","fullRequisites":"Ип Яцык Екатерина Валентиновна\nСобственник: Яцык Екатерина\nИНН 616710033607, ОГРНИП 316619600234309\nАдрес: г. Ростов-на-Дону, ул. 40 лет Победы 216, офис 5\nТелефон: +7-908-180-42-13\nПочта: Strochka_rnd@mail.ru\n\nР/с 40802810052090451025\nК/с 30101810600000000602\nБик 046015602\nПао Сбербанк"},
       {"id":65,"excelOrder":57,"name":"Аллея Домиан","address":"г. Ростов-на-Дону, ул. Маршала Жукова 16/6","phone":"+7-952-607-92-22","owner":"Лизунова Татьяна Сергеевна","legalName":"ИП Лизунова Татьяна Сергеевна","inn":"232704657746","ogrnip":"425619601175600","email":"","banking":"рс 40802810026140006566 АО Альфа-Банк БИК 046015207 К.С 30101810500000000207","fullRequisites":"ИП Лизунова Татьяна Сергеевна\nСобственник: Лизунова Татьяна Сергеевна\nИНН 232704657746, ОГРНИП 425619601175600\nАдрес: г. Ростов-на-Дону, ул. Маршала Жукова 16/6\nТелефон: +7-952-607-92-22\n\nрс 40802810026140006566 АО Альфа-Банк БИК 046015207 К.С 30101810500000000207"},
@@ -1082,13 +1127,21 @@
       {"id":78,"name":"Сальск-Пушкинский","address":"г. Сальск, ул. Пушкина 32","phone":"8 (863) 300-00-06","owner":"ИП Орлов Павел Викторович","inn":"","ogrnip":"","email":"","banking":"","fullRequisites":"ИП Орлов Павел Викторович\n\nАдрес: г. Сальск, ул. Пушкина 32\nр/с 40802810752090008590\nЮго-Западный банк ПАО Сбербанк\nКор. счёт: 30101810600000000602\nБИК 046015602","excelOrder":null,"legalName":""}
     ];
 
-    // В архиве: отсутствующие в актуальном Excel и офис с пометкой «Неактивен».
-    const inactiveIds = [4, 13, 14, 30, 31, 34, 35, 42, 45, 57, 70, 71, 72, 73, 74, 75, 76, 77, 78];
+    // Офисы Павла Орлова — отдельная действующая группа.
+    const orlovOfficeIds = [34, 70, 71, 72, 73, 74, 75, 76, 77, 78];
+    const orlovIdSet = new Set(orlovOfficeIds);
+
+    // В архиве: остальные отсутствующие в актуальном списке и офис с пометкой «Неактивен».
+    const inactiveIds = [4, 13, 14, 30, 31, 35, 42, 45, 57];
     const inactiveIdSet = new Set(inactiveIds);
 
     const activeOffices = offices
-      .filter(office => !inactiveIdSet.has(office.id))
+      .filter(office => !inactiveIdSet.has(office.id) && !orlovIdSet.has(office.id))
       .sort((a, b) => (a.excelOrder ?? 999) - (b.excelOrder ?? 999));
+
+    const orlovOffices = orlovOfficeIds
+      .map(id => offices.find(office => office.id === id))
+      .filter(Boolean);
 
     const inactiveOffices = offices
       .filter(office => inactiveIdSet.has(office.id))
@@ -1138,7 +1191,7 @@
       data.forEach(item => {
         const row = tbody.insertRow();
         const displayNumber = item.excelOrder ?? item.id;
-        const isPending = /^временно без офиса$/iu.test(item.address);
+        const isPending = /^(временно без офиса|без адреса)$/iu.test(item.address);
         const meta = isInactive ? archiveReason(item) : '';
         const phone = item.phone
           ? `<a class="phone-link" href="${escapeHtml(telHref(item.phone))}">${escapeHtml(item.phone)}</a>`
@@ -1169,7 +1222,9 @@
           item.phone,
           item.owner,
           item.legalName,
+          item.legalAddress,
           item.inn,
+          item.kpp,
           item.ogrnip,
           item.email,
           item.banking,
@@ -1199,24 +1254,32 @@
         section.querySelector('table').hidden = visibleInSection === 0;
 
         const sectionKey = section.dataset.section;
-        const sourceLength = sectionKey === 'active' ? activeOffices.length : inactiveOffices.length;
+        const sectionSources = {
+          active: activeOffices,
+          orlov: orlovOffices,
+          inactive: inactiveOffices,
+        };
+        const sourceLength = sectionSources[sectionKey].length;
         document.getElementById(`${sectionKey}-count`).textContent =
           query ? `${visibleInSection} / ${sourceLength}` : sourceLength;
       });
 
+      const activeTotal = activeOffices.length + orlovOffices.length;
       clearSearchButton.classList.toggle('is-visible', Boolean(query));
       searchStatus.textContent = query
         ? `Найдено: ${visibleTotal} из ${offices.length}`
-        : `${activeOffices.length} активных · ${inactiveOffices.length} в архиве`;
+        : `${activeTotal} активных · ${inactiveOffices.length} в архиве`;
     }
 
     function openModal(office) {
       currentOffice = office;
       modalTitle.textContent = office.name;
       modalAddress.textContent = office.address || 'Адрес не указан';
-      modalNote.textContent = office.excelOrder
-        ? 'Реквизиты проверены и актуальны'
-        : 'Архивная карточка: офиса нет в актуальном списке';
+      modalNote.textContent = orlovIdSet.has(office.id)
+        ? 'Офис Павла Орлова'
+        : office.excelOrder
+          ? 'Реквизиты проверены и актуальны'
+          : 'Архивная карточка: офиса нет в актуальном списке';
       modalContent.textContent = office.fullRequisites || 'Реквизиты не указаны.';
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
@@ -1249,9 +1312,10 @@
     }
 
     renderTable(activeOffices, 'active-table');
+    renderTable(orlovOffices, 'orlov-table');
     renderTable(inactiveOffices, 'inactive-table', true);
     document.getElementById('network-count').textContent = offices.length;
-    document.getElementById('active-total').textContent = activeOffices.length;
+    document.getElementById('active-total').textContent = activeOffices.length + orlovOffices.length;
     document.getElementById('inactive-total').textContent = inactiveOffices.length;
     updateSearch();
 
