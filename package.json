@@ -1,0 +1,7 @@
+{
+  "name": "domian-office-directory",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "qa": "node --test tests/directory.test.cjs" },
+  "engines": { "node": ">=20" }
+}
